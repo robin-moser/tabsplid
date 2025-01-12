@@ -64,86 +64,86 @@ def delete_all_projects(session: Session = Depends(get_session)):
 
 ### PERSONS ###
 
-# Create a new person for a project
-@router.post("/projects/{id}/persons", response_model=models.PersonPublic)
-def create_person(id: uuid.UUID, person_create: models.PersonCreate, session: Session = Depends(get_session)):
-    person = models.Person(**person_create.model_dump())
-    person.project_id = id
-    session.add(person)
+# Create a new member for a project
+@router.post("/projects/{id}/members", response_model=models.MemberPublic)
+def create_member(id: uuid.UUID, member_create: models.MemberCreate, session: Session = Depends(get_session)):
+    member = models.Member(**member_create.model_dump())
+    member.project_id = id
+    session.add(member)
     session.commit()
-    session.refresh(person)
-    return person
+    session.refresh(member)
+    return member
 
-# Get all persons for a project
-@router.get("/projects/{id}/persons", response_model=List[models.PersonPublic])
-def get_all_persons(id: uuid.UUID, session: Session = Depends(get_session)):
+# Get all members for a project
+@router.get("/projects/{id}/members", response_model=List[models.MemberPublic])
+def get_all_members(id: uuid.UUID, session: Session = Depends(get_session)):
     project = helper.get_project_or_404(id, session)
-    return project.persons
+    return project.members
 
-# Update a person for a project
-@router.put("/projects/{id}/persons/{person_id}", response_model=models.Person)
-def update_person(id: uuid.UUID, person_id: uuid.UUID, person_update: models.PersonUpdate, session: Session = Depends(get_session)):
-    person = helper.get_person_or_404(person_id, id, session)
+# Update a member for a project
+@router.put("/projects/{id}/members/{member_id}", response_model=models.Member)
+def update_member(id: uuid.UUID, member_id: uuid.UUID, member_update: models.MemberUpdate, session: Session = Depends(get_session)):
+    member = helper.get_member_or_404(member_id, id, session)
 
-    update_data = person_update.model_dump(exclude_unset=True)
+    update_data = member_update.model_dump(exclude_unset=True)
     for key, value in update_data.items():
-        setattr(person, key, value)
+        setattr(member, key, value)
 
-    session.add(person)
+    session.add(member)
     session.commit()
-    session.refresh(person)
-    return person
+    session.refresh(member)
+    return member
 
-# Delete a person for a project
-@router.delete("/projects/{id}/persons/{person_id}", response_model=dict)
-def delete_person(id: uuid.UUID, person_id: uuid.UUID, session: Session = Depends(get_session)):
-    person = helper.get_person_or_404(person_id, id, session)
-    session.delete(person)
+# Delete a member for a project
+@router.delete("/projects/{id}/members/{member_id}", response_model=dict)
+def delete_member(id: uuid.UUID, member_id: uuid.UUID, session: Session = Depends(get_session)):
+    member = helper.get_member_or_404(member_id, id, session)
+    session.delete(member)
     session.commit()
-    return {"message": f"Person with id {person_id} has been deleted."}
+    return {"message": f"Member with id {member_id} has been deleted."}
 
 ### EXPENSES ###
 
-# Create a new expense for a person
-@router.post("/projects/{id}/persons/{person_id}/expenses", response_model=models.ExpensePublic)
-def create_expense(id: uuid.UUID, person_id: uuid.UUID, expense_create: models.ExpenseCreate, session: Session = Depends(get_session)):
+# Create a new expense for a member
+@router.post("/projects/{id}/members/{member_id}/expenses", response_model=models.ExpensePublic)
+def create_expense(id: uuid.UUID, member_id: uuid.UUID, expense_create: models.ExpenseCreate, session: Session = Depends(get_session)):
     data = expense_create.model_dump(exclude_unset=True)
 
-    # involved_persons is a list of dics with the id of the persons,
-    # so we need to get the person object for each id
-    involved_persons = []
-    involved_person_ids = data.get("involved_persons", [])
-    if involved_person_ids:
-        involved_persons = session.exec(
-            select(models.Person).where(models.Person.id.in_(involved_person_ids))
+    # involved_members is a list of dics with the id of the members,
+    # so we need to get the member object for each id
+    involved_members = []
+    involved_member_ids = data.get("involved_members", [])
+    if involved_member_ids:
+        involved_members = session.exec(
+            select(models.Member).where(models.Member.id.in_(involved_member_ids))
         ).all()
-        if len(involved_persons) != len(involved_person_ids):
-            raise HTTPException(status_code=404, detail="One or more involved persons not found")
-    data["involved_persons"] = involved_persons
+        if len(involved_members) != len(involved_member_ids):
+            raise HTTPException(status_code=404, detail="One or more involved members not found")
+    data["involved_members"] = involved_members
 
-    expense = models.Expense(**data, project_id=id, person_id=person_id)
+    expense = models.Expense(**data, project_id=id, member_id=member_id)
     session.add(expense)
     session.commit()
     session.refresh(expense)
     return expense
 
-# Update an expense for a person
-@router.put("/projects/{id}/persons/{person_id}/expenses/{expense_id}", response_model=models.ExpensePublic)
-def update_expense(id: uuid.UUID, person_id: uuid.UUID, expense_id: uuid.UUID, expense_update: models.ExpenseUpdate, session: Session = Depends(get_session)):
+# Update an expense for a member
+@router.put("/projects/{id}/members/{member_id}/expenses/{expense_id}", response_model=models.ExpensePublic)
+def update_expense(id: uuid.UUID, member_id: uuid.UUID, expense_id: uuid.UUID, expense_update: models.ExpenseUpdate, session: Session = Depends(get_session)):
     expense = helper.get_expense_or_404(expense_id, session)
     data = expense_update.model_dump(exclude_unset=True)
 
-    # involved_persons is a list of dics with the id of the persons,
-    # so we need to get the person object for each id
-    involved_persons = []
-    involved_person_ids = data.get("involved_persons", [])
-    if involved_person_ids:
-        involved_persons = session.exec(
-            select(models.Person).where(models.Person.id.in_(involved_person_ids))
+    # involved_members is a list of dics with the id of the members,
+    # so we need to get the member object for each id
+    involved_members = []
+    involved_member_ids = data.get("involved_members", [])
+    if involved_member_ids:
+        involved_members = session.exec(
+            select(models.Member).where(models.Member.id.in_(involved_member_ids))
         ).all()
-        if len(involved_persons) != len(involved_person_ids):
-            raise HTTPException(status_code=404, detail="One or more involved persons not found")
-    data["involved_persons"] = involved_persons
+        if len(involved_members) != len(involved_member_ids):
+            raise HTTPException(status_code=404, detail="One or more involved members not found")
+    data["involved_members"] = involved_members
 
     for key, value in data.items():
         setattr(expense, key, value)
@@ -157,35 +157,35 @@ def update_expense(id: uuid.UUID, person_id: uuid.UUID, expense_id: uuid.UUID, e
 @router.get("/projects/{id}/calculate", response_model=models.Calculate)
 def calculate(id: uuid.UUID, session: Session = Depends(get_session)):
     project = helper.get_project_or_404(id, session)
-    persons = list(session.exec(select(models.Person).where(models.Person.project_id == project.id)).all())
-    if not persons:
-        raise HTTPException(status_code=404, detail="No persons found in this project")
+    members = list(session.exec(select(models.Member).where(models.Member.project_id == project.id)).all())
+    if not members:
+        raise HTTPException(status_code=404, detail="No members found in this project")
 
     expense_query = session.exec(
         select(models.Expense).where(models.Expense.project_id == project.id)
     )
     for expense in expense_query:
-        involved_persons = expense.involved_persons or persons  # Assume all persons if empty
-        part_amount = expense.amount / len(involved_persons)
+        involved_members = expense.involved_members or members  # Assume all members if empty
+        part_amount = expense.amount / len(involved_members)
 
-        for involved_person in involved_persons:
-            involved_person.balance -= part_amount
-        expense.person.balance += expense.amount
+        for involved_member in involved_members:
+            involved_member.balance -= part_amount
+        expense.member.balance += expense.amount
 
     payments = []
 
-    for person in persons:
-        if person.balance < 0:
-            for other_person in persons:
-                if other_person.balance > 0:
+    for member in members:
+        if member.balance < 0:
+            for other_member in members:
+                if other_member.balance > 0:
                     payment = models.Payment(
-                        from_person=person,
-                        to_person=other_person,
-                        amount=min(abs(person.balance), other_person.balance)
+                        from_member=member,
+                        to_member=other_member,
+                        amount=min(abs(member.balance), other_member.balance)
                     )
                     payments.append(payment)
-                    person.balance += payment.amount
-                    other_person.balance -= payment.amount
+                    member.balance += payment.amount
+                    other_member.balance -= payment.amount
 
 
     calculate = models.Calculate(

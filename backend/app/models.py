@@ -3,9 +3,9 @@ import uuid, uuid6
 
 ### Links
 
-class ExpensePersonLink(SQLModel, table=True):
+class ExpenseMemberLink(SQLModel, table=True):
     expense_id: uuid.UUID | None = Field(default=None, foreign_key="expense.id", primary_key=True)
-    person_id: uuid.UUID | None = Field(default=None, foreign_key="person.id", primary_key=True)
+    member_id: uuid.UUID | None = Field(default=None, foreign_key="member.id", primary_key=True)
 
 
 ###
@@ -15,7 +15,7 @@ class ProjectBase(SQLModel):
 
 class Project(ProjectBase, table=True):
     id: uuid.UUID = Field(primary_key=True, default_factory=uuid6.uuid7)
-    persons: list["Person"] = Relationship(back_populates="project", cascade_delete=True)
+    members: list["Member"] = Relationship(back_populates="project", cascade_delete=True)
     expenses: list["Expense"] = Relationship(back_populates="project", cascade_delete=True)
 
 class ProjectPublicAll(ProjectBase):
@@ -23,7 +23,7 @@ class ProjectPublicAll(ProjectBase):
 
 class ProjectPublic(ProjectBase):
     id: uuid.UUID
-    persons: list["PersonPublic"] = []
+    members: list["MemberPublicWithExpenses"] = []
 
 class ProjectCreate(ProjectBase):
     pass
@@ -34,26 +34,29 @@ class ProjectUpdate(ProjectBase):
 
 ###
 
-class PersonBase(SQLModel):
+class MemberBase(SQLModel):
     name: str | None = None
 
-class Person(PersonBase, table=True):
+class Member(MemberBase, table=True):
     id: uuid.UUID = Field(primary_key=True, default_factory=uuid6.uuid7)
     project_id: uuid.UUID | None = Field(primary_key=True, default=None, foreign_key="project.id")
     balance: float = Field(default=0)
-    project: "Project" = Relationship(back_populates="persons")
-    expenses: list["Expense"] = Relationship(back_populates="person", cascade_delete=True)
+    project: "Project" = Relationship(back_populates="members")
+    expenses: list["Expense"] = Relationship(back_populates="member", cascade_delete=True)
     involved_expenses: list["Expense"] = Relationship(
-            back_populates="involved_persons", link_model=ExpensePersonLink)
+            back_populates="involved_members", link_model=ExpenseMemberLink)
 
-class PersonPublic(PersonBase):
+class MemberPublic(MemberBase):
+    id: uuid.UUID
+
+class MemberPublicWithExpenses(MemberBase):
     id: uuid.UUID
     expenses: list["ExpensePublicAll"] = []
 
-class PersonCreate(PersonBase):
+class MemberCreate(MemberBase):
     pass
 
-class PersonUpdate(PersonBase):
+class MemberUpdate(MemberBase):
     pass
 
 
@@ -66,34 +69,34 @@ class ExpenseBase(SQLModel):
 class Expense(ExpenseBase, table=True):
     id: uuid.UUID = Field(primary_key=True, default_factory=uuid6.uuid7)
     project_id: uuid.UUID = Field(primary_key=True, foreign_key="project.id")
-    person_id: uuid.UUID = Field(primary_key=True, foreign_key="person.id")
+    member_id: uuid.UUID = Field(primary_key=True, foreign_key="member.id")
     project: "Project" = Relationship(back_populates="expenses")
-    person: "Person" = Relationship(back_populates="expenses")
-    involved_persons: list["Person"] = Relationship(
-            back_populates="involved_expenses", link_model=ExpensePersonLink)
+    member: "Member" = Relationship(back_populates="expenses")
+    involved_members: list["Member"] = Relationship(
+            back_populates="involved_expenses", link_model=ExpenseMemberLink)
 
 class ExpensePublic(ExpenseBase):
     id: uuid.UUID
-    involved_persons: list["PersonBase"] = []
+    involved_members: list["MemberPublic"] = []
 
 class ExpensePublicAll(ExpenseBase):
     id: uuid.UUID
-    involved_persons: list["PersonBase"] = []
+    involved_members: list["MemberPublic"] = []
 
 class ExpenseCreate(ExpenseBase):
-    involved_persons: list[uuid.UUID] = []
+    involved_members: list[uuid.UUID] = []
 
 class ExpenseUpdate(ExpenseBase):
-    involved_persons: list[uuid.UUID] = []
+    involved_members: list[uuid.UUID] = []
 
 ###
 
 class Payment(SQLModel):
-    from_person: "Person"
-    to_person: "Person"
+    from_member: "Member"
+    to_member: "Member"
     amount: float
 
 class Calculate(SQLModel):
     project: "Project"
     payments: list["Payment"]
-    # persons: list["PersonPublicWithExpenses"]
+    # members: list["MemberPublicWithExpenses"]

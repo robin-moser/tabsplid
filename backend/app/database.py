@@ -5,7 +5,7 @@ sqlite_file_name = "database.db"
 DATABASE_URL = f"sqlite:///{sqlite_file_name}"
 
 # Create the database engine
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL, echo=False)
 
 def init_db():
     SQLModel.metadata.create_all(engine)

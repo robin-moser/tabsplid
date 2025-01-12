@@ -11,13 +11,13 @@ def get_project_or_404(project_id: uuid.UUID, session: Session):
         raise HTTPException(status_code=404, detail="Project not found")
     return project
 
-def get_person_or_404(person_id: uuid.UUID, project_id: uuid.UUID, session: Session):
-    person = session.exec(
-        select(models.Person).where(models.Person.id == person_id, models.Person.project_id == project_id)
+def get_member_or_404(member_id: uuid.UUID, project_id: uuid.UUID, session: Session):
+    member = session.exec(
+        select(models.Member).where(models.Member.id == member_id, models.Member.project_id == project_id)
     ).first()
-    if not person:
-        raise HTTPException(status_code=404, detail="Person not found")
-    return person
+    if not member:
+        raise HTTPException(status_code=404, detail="Member not found")
+    return member
 
 def get_expense_or_404(expense_id: uuid.UUID, session: Session):
     expense = session.exec(select(models.Expense).where(models.Expense.id == expense_id)).first()
