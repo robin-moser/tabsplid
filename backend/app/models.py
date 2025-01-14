@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field, Relationship
+from datetime import datetime, timezone
 import uuid, uuid6
 
 ### Links
@@ -15,15 +16,23 @@ class ProjectBase(SQLModel):
 
 class Project(ProjectBase, table=True):
     id: uuid.UUID = Field(primary_key=True, default_factory=uuid6.uuid7)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc),
+        sa_column_kwargs={"onupdate": lambda: datetime.now(timezone.utc)})
     members: list["Member"] = Relationship(back_populates="project", cascade_delete=True)
     expenses: list["Expense"] = Relationship(back_populates="project", cascade_delete=True)
 
 class ProjectPublicAll(ProjectBase):
     id: uuid.UUID
+    created_at: datetime
+    updated_at: datetime
 
 class ProjectPublic(ProjectBase):
     id: uuid.UUID
+    created_at: datetime
+    updated_at: datetime
     members: list["MemberPublicWithExpenses"] = []
+    payments: list["Payment"] = []
 
 class ProjectCreate(ProjectBase):
     pass
@@ -51,13 +60,14 @@ class MemberPublic(MemberBase):
 
 class MemberPublicWithExpenses(MemberBase):
     id: uuid.UUID
-    expenses: list["ExpensePublicAll"] = []
+    expenses: list["ExpensePublic"] = []
 
 class MemberCreate(MemberBase):
     pass
 
 class MemberUpdate(MemberBase):
     pass
+
 
 
 ###
@@ -79,15 +89,11 @@ class ExpensePublic(ExpenseBase):
     id: uuid.UUID
     involved_members: list["MemberPublic"] = []
 
-class ExpensePublicAll(ExpenseBase):
-    id: uuid.UUID
-    involved_members: list["MemberPublic"] = []
-
 class ExpenseCreate(ExpenseBase):
     involved_members: list[uuid.UUID] = []
 
 class ExpenseUpdate(ExpenseBase):
-    involved_members: list[uuid.UUID] = []
+    involved_members: list[uuid.UUID] | None = None
 
 ###
 
@@ -96,7 +102,7 @@ class Payment(SQLModel):
     to_member: "Member"
     amount: float
 
-class Calculate(SQLModel):
-    project: "Project"
-    payments: list["Payment"]
-    # members: list["MemberPublicWithExpenses"]
+class PaymentPublic(SQLModel):
+    from_member: "MemberPublic"
+    to_member: "MemberPublic"
+    amount: float
