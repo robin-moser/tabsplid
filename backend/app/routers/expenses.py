@@ -81,7 +81,7 @@ def update_expense(
 
 
 # Delete an expense by id
-@router.delete("/projects/{id}/members/{member_id}/expenses/{expense_id}", response_model=models.ExpensePublic)
+@router.delete("/projects/{id}/members/{member_id}/expenses/{expense_id}", response_model=None, status_code=204)
 def delete_expense(
         member_id: uuid.UUID,
         expense_id: uuid.UUID,
@@ -90,4 +90,4 @@ def delete_expense(
     expense = helper.get_expense_or_404(expense_id, member_id, session)
     session.delete(expense)
     session.commit()
-    return expense
+    return

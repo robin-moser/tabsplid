@@ -8,7 +8,6 @@ class ExpenseMemberLink(SQLModel, table=True):
     expense_id: uuid.UUID | None = Field(default=None, foreign_key="expense.id", primary_key=True)
     member_id: uuid.UUID | None = Field(default=None, foreign_key="member.id", primary_key=True)
 
-
 ###
 
 class ProjectBase(SQLModel):
@@ -73,7 +72,7 @@ class MemberUpdate(MemberBase):
 ###
 
 class ExpenseBase(SQLModel):
-    amount: float = 0
+    amount: float | None = 0
     name: str | None = None
 
 class Expense(ExpenseBase, table=True):

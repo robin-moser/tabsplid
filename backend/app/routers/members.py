@@ -25,7 +25,7 @@ def get_all_members(
 
 
 # Create a new member for a project
-@router.post("/projects/{id}/members", response_model=models.MemberPublic)
+@router.post("/projects/{id}/members", response_model=models.MemberPublicWithExpenses)
 def create_member(
         id: uuid.UUID,
         data: models.MemberCreate,
@@ -70,7 +70,7 @@ def update_member(
 
 
 # Delete a member by id
-@router.delete("/projects/{id}/members/{member_id}", response_model=dict)
+@router.delete("/projects/{id}/members/{member_id}", response_model=None, status_code=204)
 def delete_member(
         id: uuid.UUID,
         member_id: uuid.UUID,
@@ -79,4 +79,4 @@ def delete_member(
     member = helper.get_member_or_404(member_id, id, session)
     session.delete(member)
     session.commit()
-    return {"message": f"Member with id {member_id} has been deleted."}
+    return

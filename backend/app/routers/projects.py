@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends
 from sqlmodel import Session, select
 import uuid
 
@@ -90,7 +90,7 @@ def update_project(
 
 
 # Delete a project
-@router.delete("/projects/{id}", response_model=dict)
+@router.delete("/projects/{id}", response_model=None, status_code=204)
 def delete_project(
         id: uuid.UUID,
         session: Session = Depends(get_session)):
@@ -98,4 +98,4 @@ def delete_project(
     project = helper.get_project_or_404(id, session)
     session.delete(project)
     session.commit()
-    return {"message": f"Project with id {id} has been deleted."}
+    return
