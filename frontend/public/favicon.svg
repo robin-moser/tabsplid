@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="200" height="200"><svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>Layer 1</title>
+  <g id="SvgjsG1039" aria-label="t">
+   <path id="SvgjsPath1038" class="c3" d="m65.7235,62.83557l61.33833,0l0,28.83721l-61.33833,0l0,-28.83721z" fill="#f04d1a"></path>
+   <path id="SvgjsPath1037" class="c1" d="m109.20086,177.34706c-23.97384,0 -43.47618,-19.50472 -43.47618,-43.47737l0,-111.21683l35.24429,0l0,111.21683a8.24261,8.24261 0 0 0 8.23189,8.23189a8.14732,8.14732 0 0 0 4.73116,-1.49367l20.34447,28.78004a43.20936,43.20936 0 0 1 -25.07563,7.95912z" fill="#e32029"></path>
+   <path id="SvgjsPath1036" class="c2" d="m65.7235,62.83557l35.24548,0l0,28.83721l-35.24548,0l0,-28.83721z" fill="#e93621"></path>
+  </g>
+ </g>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
