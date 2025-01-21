@@ -1,0 +1,22 @@
+FROM node:22 AS build
+
+WORKDIR /app
+
+COPY frontend/package*.json .
+
+RUN npm install
+
+COPY frontend/ .
+
+RUN npm run build
+
+FROM registry.robinmoser.de/nginx:1
+COPY --from=build /app/dist /app/src
+COPY frontend/config/nginx /etc/nginx
+
+RUN cat <<EOF > /etc/cont-init.d/03-set-env.sh
+#!/command/with-contenv sh
+cd /app/src && ./vite-envs.sh
+EOF
+
+RUN chmod +x /etc/cont-init.d/03-set-env.sh

@@ -1,0 +1,27 @@
+FROM python:3.13 AS build
+
+RUN pip install poetry==1.8.5
+
+ENV POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=1 \
+    POETRY_VIRTUALENVS_CREATE=1 \
+    POETRY_CACHE_DIR=/tmp/poetry_cache
+
+WORKDIR /app
+
+COPY backend/pyproject.toml backend/poetry.lock ./
+
+RUN touch README.md && \
+    poetry install --no-root && rm -rf $POETRY_CACHE_DIR
+
+
+FROM python:3.13-slim
+
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
+
+COPY --from=build ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+
+COPY backend/app ./app
+
+ENTRYPOINT ["uvicorn", "app.main:app", "--port", "8080", "--host", "0.0.0.0"]
