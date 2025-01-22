@@ -186,8 +186,8 @@ const ProjectPage = () => {
     <div>
 
       <div className={`
-        w-full left-0 transition-all duration-300 ease-in-out text-xs text-center
-        p-1 min-h-5 sticky top-0 z-50 text-white ${hasUnsavedChanges
+        w-full left-0 transition-all duration-300 ease-in-out text-sm text-center
+        p-1 min-h-8 sticky top-0 z-50 text-white md:hidden ${hasUnsavedChanges
           ? "opacity-100 bg-primary-600 cursor-pointer hover:bg-primary-700"
           : "opacity-0 bg-zinc-400"}`}
         onClick={hasUnsavedChanges ? handleSaveChanges : undefined}>
@@ -201,7 +201,7 @@ const ProjectPage = () => {
         {/* Left panel: Member List */}
         <div className="
           px-4 border-neutral-200 dark:border-zinc-800
-          max-w-lg w-full md:border-r-2 md:pr-6">
+          max-w-lg w-full mx-auto md:mx-0 md:border-r-2 md:pr-6">
           <div className="py-4 text-3xl font-bold flex flex-row gap-2">
             <input
               type="text"

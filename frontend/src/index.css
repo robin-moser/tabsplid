@@ -4,8 +4,12 @@
 
 .member-input {
     @apply bg-zinc-200 dark:bg-zinc-700
-    text-neutral-800 dark:text-zinc-400
+    text-neutral-800 dark:text-zinc-200
     border-neutral-300 dark:border-zinc-500
+}
+
+.member-input::placeholder {
+    @apply text-neutral-400 dark:text-zinc-500
 }
 
 button {

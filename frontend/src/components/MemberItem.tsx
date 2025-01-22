@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {User, Coins, CirclePlus, CircleX} from "lucide-react";
+import {Tooltip} from 'react-tooltip'
+
 import ExpenseItem from "./ExpenseItem";
 import {Expense, Member} from "../types";
 
@@ -64,10 +66,13 @@ const MemberItem: React.FC<MemberItemProps> = (
               onChange={(e) => setEditedMemberName(e.target.value)}
             />
           </div>
+          <Tooltip id="remove" />
           <CircleX
             size={20}
             className="cursor-pointer text-zinc-400"
             onClick={handleRemoveMember}
+            data-tooltip-content="Remove this member"
+            data-tooltip-id="remove"
           />
         </div>
         <div className="">

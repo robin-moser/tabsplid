@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Expense, Member} from "../types";
 import {CircleMinus, Users} from "lucide-react";
+import {Tooltip} from "react-tooltip";
 
 interface ExpenseItemProps {
   memberId: string;
@@ -72,11 +73,13 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
           className="w-full px-2 py-2 border rounded-md member-input"
           type="text"
           value={editedExpense.name || ''}
+          placeholder="Expense"
           onChange={(e) => setEditedExpense({...editedExpense, name: e.target.value})}
         />
         <input
           className="w-1/2 px-2 py-2 border rounded-md member-input"
           value={editedExpense.amount || ''}
+          placeholder="Amount"
           onChange={(e) => {
             const input = e.target.value;
             const parsed = parseInt(input) || editedExpense.amount;
@@ -85,15 +88,20 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
         />
       </div>
       <div className="flex mb-2 gap-2 items-center w-1/4 pl-2">
+        <Tooltip id="expenseItem" />
         <CircleMinus
           size={20}
           className="cursor-pointer text-zinc-400"
           onClick={handleRemoveExpense}
+          data-tooltip-content="Remove this expense"
+          data-tooltip-id="expenseItem"
         />
         <Users
           size={20}
           className={`cursor-pointer ${isInvolvedSubset() ? "text-primary-500" : "text-zinc-400"}`}
           onClick={() => isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true)}
+          data-tooltip-content="Exclude members from the expense"
+          data-tooltip-id="expenseItem"
         />
       </div>
 

@@ -17,12 +17,14 @@ export interface PaymentListProps {
 
 const PaymentItem = ({payment}: PaymentProps) => {
   return (
-    <div className="flex justify-between w-3/4 order-b-2 p-3 flex-1">
+    <div className="flex justify-between w-3/4 order-b-2 p-3 flex-1 items-center">
 
       <div className="flex flex-row gap-2 items-center">
-        <span>{payment.from_member.name}</span>
-        <MoveRight size={20} />
-        <span>{payment.to_member.name}:</span>
+        <span>{payment.from_member.name || "Unnamed"}</span>
+        <div>
+          <MoveRight size={20} />
+        </div>
+        <span>{payment.to_member.name || "Unnamed"}:</span>
       </div>
 
       <span className="
