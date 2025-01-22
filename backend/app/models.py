@@ -31,7 +31,7 @@ class ProjectPublic(ProjectBase):
     created_at: datetime
     updated_at: datetime
     members: list["MemberPublicWithExpenses"] = []
-    payments: list["Payment"] = []
+    payments: list["PaymentPublic"] = []
 
 class ProjectCreate(ProjectBase):
     pass

@@ -70,11 +70,11 @@ def calculate_project_payments(project: models.Project) -> list[models.PaymentPu
     # Distribute expense amounts to members
     for expense in project.expenses:
         involved_members = expense.involved_members or project.members
-        part_amount = expense.amount / len(involved_members)
+        part_amount = (expense.amount or 0) / len(involved_members)
 
         for member in involved_members:
             member.balance -= part_amount
-        expense.member.balance += expense.amount
+        expense.member.balance += (expense.amount or 0)
 
     # Calculate payments to settle balances
     payments = []
