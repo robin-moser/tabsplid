@@ -32,6 +32,10 @@ export const updateProject = async (projectId: string, project: Project) => {
     return axios.put(`${API_URL}/projects/${projectId}`, project);
 }
 
+export const deleteProject = async (projectId: string) => {
+    return axios.delete(`${API_URL}/projects/${projectId}`);
+}
+
 export const addMember = async (projectId: string, member: Member) => {
     return axios.post(`${API_URL}/projects/${projectId}/members`, member);
 };

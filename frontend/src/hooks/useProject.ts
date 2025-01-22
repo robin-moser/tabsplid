@@ -1,7 +1,7 @@
 import {useQuery, useMutation} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
-import {getProject, updateProject, } from '../api';
+import {getProject, addProject, updateProject, deleteProject} from '../api';
 import {Project} from '../types';
 
 // Fetch the project data by its ID
@@ -17,7 +17,20 @@ export const useProject = (projectId: string) => {
         queryKey: ['project', projectId],
         queryFn: () => fetchProject(projectId),
         enabled: !!projectId,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        retry: false,
+    });
+
+    // Mutation to add a new project
+    const addProjectMutation = useMutation({
+        mutationFn: (project: Project) => addProject(project),
+        onError: (error: any) => {
+            toast.error('Error adding project: ' + error.message);
+            console.error('Error adding project:', error);
+        },
+        onSuccess: (data) => {
+            console.log('Successfully added project:', data);
+        },
     });
 
     // Mutation for updating the project name
@@ -34,11 +47,27 @@ export const useProject = (projectId: string) => {
         },
     });
 
+    // Mutation for deleting the project
+    const deleteProjectMutation = useMutation({
+        mutationFn: () => deleteProject(projectId),
+        onError: (error: any) => {
+            toast.error('Error deleting project: ' + error.message);
+            console.error('Error deleting project:', error);
+        },
+        onSuccess: (data) => {
+            toast.success('Project deleted successfully');
+            console.log('Successfully deleted project:', data);
+        }
+    });
+
 
     return {
 
         getProject: getProjectQuery.data,
+        addProject: addProjectMutation.mutate,
+        deleteProject: deleteProjectMutation.mutate,
         updateProject: updateProjectMutation.mutate,
+        addProjectAsync: addProjectMutation.mutateAsync,
 
         loading: {
             getProject: getProjectQuery.isPending,

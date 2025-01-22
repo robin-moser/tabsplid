@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useProject} from "../hooks/useProject";
 
 import {useProjectState} from "../hooks/useProjectState";
@@ -15,14 +15,18 @@ import ErrorMessage from "../components/ErrorMessage";
 
 import {formatDate} from "../utils";
 import {Member, Expense} from "../types";
+import {Trash2} from "lucide-react";
+import {Tooltip} from "react-tooltip";
 
 
 const ProjectPage = () => {
   const {projectId} = useParams<{projectId: string}>();
+  const navigate = useNavigate();
 
   const {
     getProject: project,
     updateProject,
+    deleteProject,
     loading,
     error
   } = useProject(projectId || '');
@@ -178,6 +182,13 @@ const ProjectPage = () => {
     );
   }
 
+  const handleProjectDelete = async () => {
+    // ask for confirmation
+    if (!window.confirm('Are you sure you want to delete this project?')) return;
+    deleteProject();
+    navigate('/');
+  }
+
   if (loading.getProject) return <LoadingSpinner />;
   if (error.getProject) return <ErrorMessage error={`Couldn't display Project: ${error.getProject?.message}`} />;
   if (!project) return <ErrorMessage error="Project not found" />;
@@ -214,9 +225,18 @@ const ProjectPage = () => {
                 bg-white dark:bg-zinc-700"
             />
           </div>
-          <span className="text-sm relative -top-2 text-zinc-400">
-            Created: {formatDate(project.created_at)}
-          </span>
+          <div className="flex flex-row justify-left gap-2 items-center">
+            <span className="text-sm relative -top-2 text-zinc-400">
+              Created: {formatDate(project.created_at)}
+            </span>
+            <Tooltip id="delete" />
+            <Trash2 className="relative -top-2 w-4 text-zinc-400 cursor-pointer"
+              onClick={handleProjectDelete}
+              data-tooltip-content="Delete this project"
+              data-tooltip-id="delete"
+              data-tooltip-place="right"
+            />
+          </div>
           <MemberList
             members={updatedMembers}
             onAddMember={handleMemberAdd}
