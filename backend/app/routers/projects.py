@@ -18,6 +18,7 @@ router = helper.get_router()
 # Get all projects and optionally calculate payments
 @router.get("/projects", response_model=list[models.ProjectPublicAll])
 def get_all_projects(
+        _: str = Depends(helper.authenticated_or_401),
         session: Session = Depends(get_session)):
 
     projects = session.exec(select(models.Project)).all()

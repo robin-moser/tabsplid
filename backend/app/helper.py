@@ -1,11 +1,43 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from sqlmodel import Session, col, select
+import bcrypt
 import uuid
+import os
 
 from app import models
 
+# Configure Basic Auth
+security = HTTPBasic()
+
+# Fetch the bcrypt hashed credentials from environment variable
+hashed_credentials = os.getenv("BASIC_AUTH")
+try:
+    auth_user, auth_hash = hashed_credentials.split(":") if hashed_credentials else (None, None)
+except ValueError:
+    raise RuntimeError("BASIC_AUTH environment variable must be in the format 'username:hashed_password'.")
+
 def get_router():
     return APIRouter(prefix="/api")
+
+def authenticated_or_401(credentials: HTTPBasicCredentials = Depends(security)):
+    # if auth_user or auth_hash are not defined, raise an exception
+    if not (auth_user and auth_hash):
+        raise HTTPException(
+            status_code=500,
+            detail="Basic auth credentials not set",
+        )
+
+    # Check if the provided credentials are correct
+    if not (credentials.username == auth_user and bcrypt.checkpw(
+        credentials.password.encode('UTF-8'), auth_hash.encode('UTF-8'))):
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+
+    return credentials.username
 
 def get_project_or_404(project_id: uuid.UUID, session: Session):
     project = session.exec(
