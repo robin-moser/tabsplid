@@ -1,5 +1,7 @@
-import {MoveRight} from "lucide-react";
+import {ClipboardCopyIcon, MoveRight} from "lucide-react";
 import {Member} from "../types";
+import {Tooltip} from "react-tooltip";
+import {useState} from "react";
 
 export interface Payment {
   from_member: Member,
@@ -36,35 +38,71 @@ const PaymentItem = ({payment}: PaymentProps) => {
 
 const PaymentList = ({payments}: PaymentListProps) => {
 
+  const [tooltipContent, setTooltipContent] = useState("Copy link to clipboard");
+
   // balanced if no payments exist but number of expenses are > 0
   const isBalanced = payments.length === 0;
 
   return (
-    <div className="
-      bg-neutral-50 dark:bg-zinc-800
-      shadow-neutral-200 dark:shadow-zinc-950
-      border-neutral-200 dark:border-zinc-700
-      px-6 my-6 border rounded-lg shadow-lg
-      text-neutral-800 dark:text-zinc-300
-      w-full mx-auto">
-      <div className="flex flex-col items-center">
+    <>
+      <div className="
+        bg-neutral-50 dark:bg-zinc-800 shadow-neutral-200 dark:shadow-zinc-950
+        border-neutral-200 dark:border-zinc-700 px-6 my-6 border rounded-lg shadow-lg
+        text-neutral-800 dark:text-zinc-300 w-full mx-auto">
+        <div className="flex flex-col items-center">
 
-        { /* display this only if payments exist */}
-        {!isBalanced ? (
-          <>
-            <h3 className="w-full text-center font-bold text-lg border-b-2 py-4">How to settle depts</h3>
-            {payments.map((payment, index) => (
-              <PaymentItem key={index} payment={payment} />
-            ))}
-          </>
-        ) : (
-          <>
-            <h3 className="w-full text-center font-bold text-lg py-4">No payments required</h3>
-          </>
-        )}
-
+          { /* display this only if payments exist */}
+          {!isBalanced ? (
+            <>
+              <h3 className="w-full text-center font-bold text-lg border-b-2 py-4">How to settle depts</h3>
+              {payments.map((payment, index) => (
+                <PaymentItem key={index} payment={payment} />
+              ))}
+            </>
+          ) : (
+            <>
+              <h3 className="w-full text-center font-bold text-lg py-4">No payments required</h3>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+
+      <div className="
+        bg-neutral-50 dark:bg-zinc-800 shadow-neutral-200 dark:shadow-zinc-950
+        border-neutral-200 dark:border-zinc-700 px-6 mb-6 border rounded-lg shadow-lg
+        text-neutral-800 dark:text-zinc-300 w-full mx-auto">
+        <h3 className="w-full text-center font-bold text-lg border-b-2 py-4 mb-4">
+          Collaborate
+        </h3>
+        <p className="text-center w-5/6 mx-auto">
+          Share the link to collaborate on this project. Note, that anyone with the link can view and edit the project.
+        </p>
+        <Tooltip id="copy" content={tooltipContent} />
+        <div className="flex justify-between items-center">
+          <div className="text-ellipsis overflow-scroll mr-4 py-4">
+            <span className="overflow-scroll text-primary-500 text-sm font-mono dark:text-primary-400 text-nowrap">
+              {window.location.href}
+            </span>
+          </div>
+          <div>
+            <ClipboardCopyIcon
+              className="w-7 h-7 bg-zinc-200 dark:bg-zinc-600 dark:text-white p-1.5 rounded-md"
+              data-tooltip-id="copy"
+              data-tooltip-content="Copy link to clipboard"
+              data-tooltip-place="bottom"
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href)
+                setTooltipContent("Copied to clipboard!")
+                setTimeout(() => {
+                  setTooltipContent("Copy link to clipboard");
+                }, 1000)
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </>
+
   )
 }
 

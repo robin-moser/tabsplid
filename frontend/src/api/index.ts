@@ -50,15 +50,14 @@ export const deleteMember = async (projectId: string, memberId: string) => {
 }
 
 export const addExpense = async (projectId: string, memberId: string, expense: Expense) => {
-    return axios.post(`${API_URL}/projects/${projectId}/members/${memberId}/expenses`, expense);
+    // extract only the ids from involved_members instead of the whole object
+    const data = {...expense, involved_members: expense.involved_members.map((member) => member.id)};
+    return axios.post(`${API_URL}/projects/${projectId}/members/${memberId}/expenses`, data);
 };
 
 export const updateExpense = async (projectId: string, memberId: string, expense: Expense) => {
     // extract only the ids from involved_members instead of the whole object
-    const data = {
-        ...expense,
-        involved_members: expense.involved_members.map((member) => member.id),
-    };
+    const data = {...expense, involved_members: expense.involved_members.map((member) => member.id)};
     return axios.put(`${API_URL}/projects/${projectId}/members/${memberId}/expenses/${expense.id}`, data);
 };
 
