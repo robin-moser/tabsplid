@@ -18,10 +18,11 @@ import {Member, Expense} from "../types";
 import {Trash2} from "lucide-react";
 import {Tooltip} from "react-tooltip";
 
-
-const ProjectPage = () => {
+const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = ({setShowHeaderBorder}) => {
   const {projectId} = useParams<{projectId: string}>();
   const navigate = useNavigate();
+
+  setShowHeaderBorder(true);
 
   const {
     getProject: project,

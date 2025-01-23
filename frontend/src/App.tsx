@@ -8,6 +8,8 @@ import HomePage from "./pages/HomePage";
 import ProjectPage from "./pages/ProjectPage";
 
 const App = () => {
+
+  const [showHeaderBorder, setShowHeaderBorder] = useState<boolean>(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     return Cookies.get("darkMode") === "true";
   });
@@ -22,12 +24,16 @@ const App = () => {
     <main className={` ${isDarkMode ? "dark" : ""} bg-neutral-100 dark:bg-zinc-900 dark:text-white`}>
       <div className="w-full min-h-screen flex flex-col">
 
-        < Header toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
-
+        < Header
+          toggleDarkMode={toggleDarkMode}
+          isDarkMode={isDarkMode}
+          showHeaderBorder={showHeaderBorder} />
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/project/:projectId" element={<ProjectPage />} />
+            <Route path="/project/:projectId"
+              element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} />}
+            />
           </Routes>
         </Router>
 
