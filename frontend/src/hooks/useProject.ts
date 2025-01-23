@@ -18,7 +18,7 @@ export const useProject = (projectId: string) => {
         queryFn: () => fetchProject(projectId),
         enabled: !!projectId,
         refetchOnWindowFocus: false,
-        retry: false,
+        retry: 2,
     });
 
     // Mutation to add a new project
