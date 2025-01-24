@@ -33,9 +33,9 @@ const HomePage = () => {
         bg-[url('/hero15.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="absolute inset-0 dark:bg-black bg-primary-900 opacity-70 dark:opacity-40 z-0"></div>
         <div className="max-w-6xl mx-auto z-10 relative p-6 sm:p-12 md:p-24">
-          <h2 className="text-3xl md:text-4xl text-white font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl text-white font-bold mb-4">
             Simplify Group Expenses with Tabsplid
-          </h2>
+          </h1>
           <p className="text-lg text-white mb-12">
             Fair, fast, and frustration-free expense sharing for any group!
           </p>
@@ -48,7 +48,7 @@ const HomePage = () => {
             w-full mx-auto overflow-hidden relative">
 
             <div className="flex flex-col items-center relative py-8">
-              <h3 className="text-3xl font-bold mb-4">Start a new project</h3>
+              <h2 className="text-3xl font-bold mb-4">Start a new project</h2>
               <form className="max-w-md mx-auto" onSubmit={handleProjectAdd}>
                 <input
                   type="text"
@@ -72,15 +72,15 @@ const HomePage = () => {
 
       {/* Explanation Section */}
       < section id="how-it-works" className="container mx-auto px-4 py-16 max-w-6xl" >
-        <h3 className="text-3xl font-bold text-center mb-8">
+        <h2 className="text-3xl font-bold text-center mb-8">
           How tabsplid Works
-        </h3>
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 px-6">
           <div className="text-center">
             <div className="bg-primary-100 dark:bg-zinc-700 rounded-full w-16 h-16 mx-auto mb-4">
               <LockOpen className="w-full h-full p-5" />
             </div>
-            <h4 className="text-lg font-bold mb-2">No Account Needed</h4>
+            <h3 className="text-lg font-bold mb-2">No Account Needed</h3>
             <p className="">
               Share a link, and your group is ready to go.
             </p>
@@ -89,7 +89,7 @@ const HomePage = () => {
             <div className="bg-primary-100 dark:bg-zinc-700 rounded-full w-16 h-16 mx-auto mb-4">
               <Users className="w-full h-full p-5" />
             </div>
-            <h4 className="text-lg font-bold mb-2">Track Every Expense</h4>
+            <h3 className="text-lg font-bold mb-2">Track Every Expense</h3>
             <p className="">
               Add expenses and choose who pays and who shares.
             </p>
@@ -98,7 +98,7 @@ const HomePage = () => {
             <div className="bg-primary-100 dark:bg-zinc-700 rounded-full w-16 h-16 mx-auto mb-4">
               <Percent className="w-full h-full p-5" />
             </div>
-            <h4 className="text-lg font-bold mb-2">Fair Settlement</h4>
+            <h3 className="text-lg font-bold mb-2">Fair Settlement</h3>
             <p className="">
               Automatically calculate the most efficient way to settle up.
             </p>

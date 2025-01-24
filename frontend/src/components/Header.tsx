@@ -13,11 +13,11 @@ const Header: React.FC<{
   `}>
       <div>
         <a href="/">
-          <img src="/tabsplid.svg" className="w-52 mx-auto"></img>
+          <img alt="Tabsplid Logo" src="/tabsplid.svg" className="w-52 mx-auto"></img>
         </a>
         <div className="w-52 mx-auto hidden">
         </div>
-        <button onClick={toggleDarkMode}
+        <button onClick={toggleDarkMode} aria-label="Toggle Dark Mode"
           className="dark:bg-zinc-600 bg-zinc-300 p-2 rounded-lg absolute top-6 right-6">
           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
         </button>
