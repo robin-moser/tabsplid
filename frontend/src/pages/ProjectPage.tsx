@@ -17,11 +17,18 @@ import {formatDate} from "../utils";
 import {Member, Expense} from "../types";
 import {Trash2} from "lucide-react";
 import {Tooltip} from "react-tooltip";
+import toast from "react-hot-toast";
 
-const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = ({setShowHeaderBorder}) => {
-  const {projectId} = useParams<{projectId: string}>();
+const ProjectPage: React.FC<{
+  setShowHeaderBorder: (show: boolean) => void;
+  isDemo?: boolean;
+}> = ({setShowHeaderBorder, isDemo}) => {
+
+  const projectId = isDemo
+    ? import.meta.env.VITE_DEMO_PROJECT_ID
+    : useParams<{projectId: string}>().projectId;
+
   const navigate = useNavigate();
-
 
   const {
     getProject: project,
@@ -69,6 +76,18 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
     if (!project) return;
     if (!hasUnsavedChanges) return;
 
+    // Prevent saving in demo mode
+    if (isDemo) {
+      toast.error("Demo mode: Changes won't be saved", {
+        className: '!bg-slate-900 !text-white !py-6 !px-8',
+        position: 'top-right',
+        duration: 5000,
+      });
+      setOriginalProjectName(editedProjectName);
+      setOriginalMembers([...updatedMembers]);
+      return;
+    }
+
     if (projectNameChanged) {
       updateProject({...project, name: editedProjectName});
     }
@@ -80,7 +99,6 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
         updatedMembers.map(async (member) => {
           if (!originalMembers.some(m => m.id === member.id)) {
             const newMember = await addMemberAsync(member);
-            console.log('newMember:', newMember.data.id);
             return {...member, id: newMember.data.id};
           }
           return member;

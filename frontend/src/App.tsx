@@ -34,6 +34,9 @@ const App = () => {
             <Route path="/project/:projectId"
               element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} />}
             />
+            <Route path="/demo"
+              element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} isDemo={true} />}
+            />
           </Routes>
         </Router>
 
