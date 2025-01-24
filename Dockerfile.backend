@@ -17,11 +17,17 @@ RUN touch README.md && \
 
 FROM python:3.13-slim
 
+WORKDIR /application
+
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
 
 COPY --from=build ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
 COPY backend/app ./app
+COPY backend/migrations ./migrations
+COPY backend/alembic.ini ./alembic.ini
 
-ENTRYPOINT ["uvicorn", "app.main:app", "--port", "8080", "--host", "0.0.0.0"]
+COPY backend/entrypoint /entrypoint
+
+ENTRYPOINT ["/entrypoint"]
