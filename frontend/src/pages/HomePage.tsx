@@ -30,7 +30,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <section className="
         bg-primary-100 dark:bg-zinc-800 text-center overflow-hidden relative
-        bg-[url('/hero15.jpg')] bg-cover bg-center bg-no-repeat">
+        bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="absolute inset-0 dark:bg-black bg-primary-900 opacity-70 dark:opacity-40 z-0"></div>
         <div className="max-w-6xl mx-auto z-10 relative p-6 sm:p-12 md:p-24">
           <h1 className="text-3xl md:text-4xl text-white font-bold mb-4">
