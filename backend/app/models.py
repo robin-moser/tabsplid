@@ -44,6 +44,7 @@ class ProjectUpdate(ProjectBase):
 
 class MemberBase(SQLModel):
     name: str | None = None
+    order: int | None = None
 
 class Member(MemberBase, table=True):
     id: uuid.UUID = Field(primary_key=True, default_factory=uuid6.uuid7)
@@ -74,6 +75,7 @@ class MemberUpdate(MemberBase):
 class ExpenseBase(SQLModel):
     amount: float | None = 0
     name: str | None = None
+    order: int | None = None
 
 class Expense(ExpenseBase, table=True):
     id: uuid.UUID = Field(primary_key=True, default_factory=uuid6.uuid7)

@@ -1,5 +1,5 @@
 from fastapi import Depends
-from sqlmodel import Session, select
+from sqlmodel import Session, asc, nulls_last, select
 import uuid
 
 from app.database import get_session
@@ -25,7 +25,7 @@ def get_all_expenses(
         select(models.Expense).where(
             models.Expense.project_id == id,
             models.Expense.member_id == member_id
-        )
+        ).order_by(nulls_last(asc(models.Expense.order)))
     ).all()
     return expenses
 

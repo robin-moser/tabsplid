@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from sqlmodel import Session, col, select
+from sqlmodel import Session, asc, col, desc, nulls_last, select
 import bcrypt
 import uuid
 import os
@@ -48,6 +48,11 @@ def get_project_or_404(project_id: uuid.UUID, session: Session):
 
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
+
+    # Sort members and expenses by order
+    project.members.sort(key=lambda x: (x.order is None, x.order))
+    for member in project.members:
+        member.expenses.sort(key=lambda x: (x.order is None, x.order))
     return project
 
 def get_member_or_404(member_id: uuid.UUID, project_id: uuid.UUID, session: Session):
