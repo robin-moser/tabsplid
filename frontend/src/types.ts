@@ -11,6 +11,7 @@ export interface Project {
 
 export interface Member {
     id: string;
+    order: number | null;
     name: string | null;
     expenses: Expense[];
     balance: number;
@@ -18,6 +19,7 @@ export interface Member {
 
 export interface Expense {
     id: string;
+    order: number | null;
     name: string | null;
     amount: number | null;
     involved_members: Member[];

@@ -22,7 +22,6 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
   const {projectId} = useParams<{projectId: string}>();
   const navigate = useNavigate();
 
-  setShowHeaderBorder(true);
 
   const {
     getProject: project,
@@ -53,6 +52,10 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
     setUpdatedMembers,
     detectChanges
   } = useProjectState(project);
+
+  useEffect(() => {
+    setShowHeaderBorder(true);
+  }, []);
 
   useEffect(() => {
     setUpdatedProjectPayments(calculatePayments(updatedMembers));
@@ -88,8 +91,11 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
       // Update member names
       newUpdatedMembers.forEach(member => {
         const original = originalMembers.find(m => m.id === member.id);
-        // if the member name has changed, update it
-        if (original && member.name !== original.name) {
+        // if the member name or order has changed, update it
+        if (original && (
+          member.name !== original.name ||
+          member.order !== original.order)
+        ) {
           updateMember(member);
         }
       });
@@ -120,6 +126,7 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
             // Expense has changed, update it
             expense.amount !== originalExpense.amount ||
             expense.name !== originalExpense.name ||
+            expense.order !== originalExpense.order ||
             JSON.stringify(expense.involved_members.map(m => m.id)) !==
             JSON.stringify(originalExpense.involved_members.map(m => m.id))
           ) {
@@ -149,7 +156,10 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
 
   const handleMemberUpdate = (updatedMember: Member) => {
     setUpdatedMembers(prev =>
-      prev.map(member => (member.id === updatedMember.id ? updatedMember : member))
+      prev.map((member, index) => {
+        const newMember = member.id === updatedMember.id ? updatedMember : member;
+        return {...newMember, order: index};
+      })
     );
   };
 
@@ -158,17 +168,22 @@ const ProjectPage: React.FC<{setShowHeaderBorder: (show: boolean) => void;}> = (
   }
 
   const handleExpenseUpdate = (memberId: string, updatedExpense: Expense) => {
-    setUpdatedMembers(prev =>
-      prev.map(member =>
+    setUpdatedMembers(prev => {
+      const updated = prev.map(member =>
         member.id === memberId
           ? {
             ...member,
-            expenses: member.expenses.map(expense =>
-              expense.id === updatedExpense.id ? updatedExpense : expense
-            ),
+            expenses: member.expenses.map((expense, index) => {
+              const newExpense = expense.id === updatedExpense.id ? updatedExpense : expense;
+              return {...newExpense, order: index};
+            })
           } : member
       )
-    );
+      if (JSON.stringify(prev) === JSON.stringify(updated)) {
+        return prev;
+      }
+      return updated;
+    });
   };
 
   const handleExpenseDelete = (memberId: string, expense: Expense) => {

@@ -35,6 +35,7 @@ const MemberItem: React.FC<MemberItemProps> = (
   const addNewExpense = () => {
     const newExpense = {
       id: "new-" + Math.random().toString(36).substring(2, 6),
+      order: member.expenses.length,
       name: null,
       amount: null,
       involved_members: [],

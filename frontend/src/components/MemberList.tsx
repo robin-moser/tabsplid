@@ -17,6 +17,7 @@ const MemberList: React.FC<MemberListProps> = (
   const addNewMember = () => {
     onAddMember({
       id: "new-" + Math.random().toString(36).substring(2, 6),
+      order: members.length,
       name: '',
       expenses: [],
       balance: 0,
