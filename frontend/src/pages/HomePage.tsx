@@ -7,6 +7,7 @@ import {useProject} from "../hooks/useProject";
 const HomePage = () => {
 
   const navigate = useNavigate();
+  document.title = 'tabsplid - Simplify Group Expenses';
 
   const {
     addProjectAsync,
@@ -34,7 +35,7 @@ const HomePage = () => {
         <div className="absolute inset-0 dark:bg-black bg-primary-900 opacity-70 dark:opacity-40 z-0"></div>
         <div className="max-w-6xl mx-auto z-10 relative p-6 sm:p-12 md:p-24">
           <h1 className="text-3xl md:text-4xl text-white font-bold mb-4">
-            Simplify Group Expenses with Tabsplid
+            Simplify group expenses with tabsplid
           </h1>
           <p className="text-lg text-white mb-12">
             Fair, fast, and frustration-free expense sharing for any group!
@@ -65,9 +66,10 @@ const HomePage = () => {
                 <button
                   type="button"
                   onClick={() => navigate('/demo')}
-                  className="w-4/5 md:w-2/5 md:mx-2 bg-zinc-300 hover:bg-zinc-200 text-zinc-800 border-0 font-bold
+                  className="w-4/5 md:w-2/5 md:mx-2 bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700
+                  dark:bg-zinc-600 text-zinc-800 dark:text-neutral-200 border-0 font-bold
                     mt-4 px-6 py-2 justify-center rounded-md self-stretch">
-                  Show example
+                  Show Example
                 </button>
               </form>
               <div className="max-w-md mx-auto w-full">
@@ -82,7 +84,7 @@ const HomePage = () => {
       {/* Explanation Section */}
       < section id="how-it-works" className="container mx-auto px-4 py-16 max-w-6xl" >
         <h2 className="text-3xl font-bold text-center mb-8">
-          How tabsplid Works
+          How tabsplid works
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 px-6">
           <div className="text-center">

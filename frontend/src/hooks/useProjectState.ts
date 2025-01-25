@@ -15,7 +15,7 @@ export const useProjectState = (project: Project | undefined) => {
       setEditedProjectName(project.name || '');
       setOriginalMembers(project.members || []);
       setUpdatedMembers(project.members || []);
-      document.title = "tabsplid | " + project.name || 'Project';
+      document.title = "tabsplid - " + (project.name || 'Untitled Project');
     }
   }, [project]);
 
