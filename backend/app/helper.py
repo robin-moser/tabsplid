@@ -1,6 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from sqlmodel import Session, asc, col, desc, nulls_last, select
+
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
 import bcrypt
 import uuid
 import os
@@ -9,6 +13,9 @@ from app import models
 
 # Configure Basic Auth
 security = HTTPBasic()
+
+# Initialize the limiter
+limiter = Limiter(key_func=get_remote_address)
 
 # Fetch the bcrypt hashed credentials from environment variable
 hashed_credentials = os.getenv("BASIC_AUTH")

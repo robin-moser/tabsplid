@@ -1,8 +1,9 @@
-from fastapi import Depends
+from fastapi import Depends, Request
 from sqlmodel import Session, asc, nulls_last, select
 import uuid
 
 from app.database import get_session
+from app.limiter import limiter
 from app import models, helper
 
 router = helper.get_router()
@@ -16,7 +17,9 @@ router = helper.get_router()
 
 # Get all expenses for a member
 @router.get("/projects/{id}/members/{member_id}/expenses", response_model=list[models.ExpensePublic])
+@limiter.limit("30/minute")
 def get_all_expenses(
+        request: Request,
         id: uuid.UUID,
         member_id: uuid.UUID,
         session: Session = Depends(get_session)):
@@ -32,7 +35,9 @@ def get_all_expenses(
 
 # Create a new expense for a member
 @router.post("/projects/{id}/members/{member_id}/expenses", response_model=models.ExpensePublic)
+@limiter.limit("30/minute")
 def create_expense(
+        request: Request,
         id: uuid.UUID,
         member_id: uuid.UUID,
         data: models.ExpenseCreate,
@@ -50,7 +55,9 @@ def create_expense(
 
 # Get an expense by id
 @router.get("/projects/{id}/members/{member_id}/expenses/{expense_id}", response_model=models.ExpensePublic)
+@limiter.limit("30/minute")
 def get_expense(
+        request: Request,
         member_id: uuid.UUID,
         expense_id: uuid.UUID,
         session: Session = Depends(get_session)):
@@ -61,7 +68,9 @@ def get_expense(
 
 # Update an expense by id
 @router.put("/projects/{id}/members/{member_id}/expenses/{expense_id}", response_model=models.ExpensePublic)
+@limiter.limit("30/minute")
 def update_expense(
+        request: Request,
         member_id: uuid.UUID,
         expense_id: uuid.UUID,
         data: models.ExpenseUpdate,
@@ -82,7 +91,9 @@ def update_expense(
 
 # Delete an expense by id
 @router.delete("/projects/{id}/members/{member_id}/expenses/{expense_id}", response_model=None, status_code=204)
+@limiter.limit("30/minute")
 def delete_expense(
+        request: Request,
         member_id: uuid.UUID,
         expense_id: uuid.UUID,
         session: Session = Depends(get_session)):

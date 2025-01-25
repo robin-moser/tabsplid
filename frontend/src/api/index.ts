@@ -1,7 +1,18 @@
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {Project, Member, Expense} from "../types";
 
 const API_URL = import.meta.env.VITE_API_URL;
+
+
+// Print different error messages based on the error code
+export const getErrorMessage = (error: AxiosError) => {
+  switch (error.status) {
+    case 429:
+      return 'Too many requests. Please try again later!';
+    default:
+      return error.message;
+  }
+};
 
 export const getProjects = async (): Promise<Project[]> => {
   const response = await axios.get(`${API_URL}/projects`);

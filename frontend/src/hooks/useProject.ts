@@ -1,8 +1,15 @@
 import {useQuery, useMutation} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import {AxiosError} from 'axios';
 
-import {getProject, addProject, updateProject, deleteProject} from '../api';
 import {Project} from '../types';
+import {
+  getProject,
+  addProject,
+  updateProject,
+  deleteProject,
+  getErrorMessage,
+} from '../api';
 
 // Fetch the project data by its ID
 const fetchProject = async (projectId: string): Promise<Project> => {
@@ -18,14 +25,19 @@ export const useProject = (projectId: string) => {
     queryFn: () => fetchProject(projectId),
     enabled: !!projectId,
     refetchOnWindowFocus: false,
-    retry: 2,
+    retry: (failureCount, error: AxiosError) => {
+      if (error.response?.status === 404) return false;
+      if (error.response?.status === 429) return false;
+      return failureCount < 3;
+    }
   });
 
   // Mutation to add a new project
   const addProjectMutation = useMutation({
     mutationFn: (project: Project) => addProject(project),
-    onError: (error: Error) => {
-      toast.error('Error adding project: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error adding project: ' + message);
       console.error('Error adding project:', error);
     },
     onSuccess: (data) => {
@@ -36,8 +48,9 @@ export const useProject = (projectId: string) => {
   // Mutation for updating the project name
   const updateProjectMutation = useMutation({
     mutationFn: (project: Project) => updateProject(projectId, project),
-    onError: (error: Error) => {
-      toast.error('Error updating project: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error updating project: ' + message);
       console.error('Error updating project:', error);
     },
     onSuccess: (data) => {
@@ -50,8 +63,9 @@ export const useProject = (projectId: string) => {
   // Mutation for deleting the project
   const deleteProjectMutation = useMutation({
     mutationFn: () => deleteProject(projectId),
-    onError: (error: Error) => {
-      toast.error('Error deleting project: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error deleting project: ' + message);
       console.error('Error deleting project:', error);
     },
     onSuccess: (data) => {
@@ -75,8 +89,13 @@ export const useProject = (projectId: string) => {
     },
 
     error: {
-      getProject: getProjectQuery.error,
-      updateProject: updateProjectMutation.error,
-    },
+      getProject: getProjectQuery.error
+        ? {...getProjectQuery.error, message: getErrorMessage(getProjectQuery.error)}
+        : undefined,
+
+      updateProject: updateProjectMutation.error
+        ? {...updateProjectMutation.error, message: getErrorMessage(updateProjectMutation.error)}
+        : undefined,
+    }
   };
 };

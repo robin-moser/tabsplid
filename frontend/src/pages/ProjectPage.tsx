@@ -223,7 +223,7 @@ const ProjectPage: React.FC<{
   }
 
   if (loading.getProject) return <LoadingSpinner />;
-  if (error.getProject) return <ErrorMessage error={`Couldn't display Project: ${error.getProject?.message}`} />;
+  if (error.getProject) return <ErrorMessage error={`Couldn't load the project: ${error.getProject?.message}`} />;
   if (!project) return <ErrorMessage error="Project not found" />;
 
   return (

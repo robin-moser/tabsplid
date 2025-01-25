@@ -1,8 +1,9 @@
-from fastapi import Depends
+from fastapi import Depends, Request
 from sqlmodel import Session, select
 import uuid
 
 from app.database import get_session
+from app.limiter import limiter
 from app import models, helper
 
 router = helper.get_router()
@@ -17,7 +18,9 @@ router = helper.get_router()
 
 # Get all projects and optionally calculate payments
 @router.get("/projects", response_model=list[models.ProjectPublicAll])
+@limiter.limit("5/minute")
 def get_all_projects(
+        request: Request,
         _: str = Depends(helper.authenticated_or_401),
         session: Session = Depends(get_session)):
 
@@ -25,21 +28,11 @@ def get_all_projects(
     return projects
 
 
-# Delete all projects
-@router.delete("/projects", response_model=dict)
-def delete_all_projects(
-        session: Session = Depends(get_session)):
-
-    projects = session.exec(select(models.Project)).all()
-    for project in projects:
-        session.delete(project)
-    session.commit()
-    return {"message": "All projects have been deleted."}
-
-
 # Create a new project
 @router.post("/projects", response_model=models.ProjectPublic)
+@limiter.limit("2/minute")
 def create_project(
+        request: Request,
         data: models.ProjectCreate,
         member_count: int = 0,
         session: Session = Depends(get_session)):
@@ -58,7 +51,9 @@ def create_project(
 
 # Get a project by id
 @router.get("/projects/{id}", response_model=models.ProjectPublic)
+@limiter.limit("10/10second")
 def get_project(
+        request: Request,
         id: uuid.UUID,
         calculate: bool = False,
         session: Session = Depends(get_session)):
@@ -74,7 +69,9 @@ def get_project(
 
 # Update a project by id
 @router.put("/projects/{id}", response_model=models.ProjectPublic)
+@limiter.limit("10/10second")
 def update_project(
+        request: Request,
         id: uuid.UUID,
         data: models.ProjectUpdate,
         session: Session = Depends(get_session)):
@@ -92,7 +89,9 @@ def update_project(
 
 # Delete a project
 @router.delete("/projects/{id}", response_model=None, status_code=204)
+@limiter.limit("2/minute")
 def delete_project(
+        request: Request,
         id: uuid.UUID,
         session: Session = Depends(get_session)):
 

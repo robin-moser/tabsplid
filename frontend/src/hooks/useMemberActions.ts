@@ -1,10 +1,16 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import {AxiosError} from 'axios';
 
 import {Member, Expense} from '../types';
 import {
-  addMember, updateMember, deleteMember,
-  addExpense, updateExpense, deleteExpense,
+  addMember,
+  updateMember,
+  deleteMember,
+  addExpense,
+  updateExpense,
+  deleteExpense,
+  getErrorMessage,
 } from '../api';
 
 export const useMemberActions = (projectId: string) => {
@@ -13,8 +19,9 @@ export const useMemberActions = (projectId: string) => {
   // Mutation to add a new member
   const addMemberMutation = useMutation({
     mutationFn: (newMember: Member) => addMember(projectId, newMember),
-    onError: (error: Error) => {
-      toast.error('Error adding member: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error adding member: ' + message);
       console.error('Error adding member:', error);
     },
     onSuccess: (data) => {
@@ -27,8 +34,9 @@ export const useMemberActions = (projectId: string) => {
   // Mutation for updating a member
   const updateMemberMutation = useMutation({
     mutationFn: (member: Member) => updateMember(projectId, member),
-    onError: (error: Error) => {
-      toast.error('Error updating member: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error updating member: ' + message);
       console.error('Error updating member:', error);
     },
     onSuccess: (data) => {
@@ -41,8 +49,9 @@ export const useMemberActions = (projectId: string) => {
   // Mutation to delete a member
   const deleteMemberMutation = useMutation({
     mutationFn: (member: Member) => deleteMember(projectId, member.id),
-    onError: (error: Error) => {
-      toast.error('Error deleting member: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error deleting member: ' + message);
       console.error('Error deleting member:', error);
     },
     onSuccess: (_data, variables) => {
@@ -56,8 +65,9 @@ export const useMemberActions = (projectId: string) => {
   const addExpenseMutation = useMutation({
     mutationFn: ({memberId, expense}: {memberId: string, expense: Expense}) =>
       addExpense(projectId, memberId, expense),
-    onError: (error: Error) => {
-      toast.error('Error adding expense: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error adding expense: ' + message);
       console.error('Error adding expense:', error);
     },
     onSuccess: (data) => {
@@ -71,8 +81,9 @@ export const useMemberActions = (projectId: string) => {
   const updateExpenseMutation = useMutation({
     mutationFn: ({memberId, expense}: {memberId: string, expense: Expense}) =>
       updateExpense(projectId, memberId, expense),
-    onError: (error: Error) => {
-      toast.error('Error updating expense: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error updating expense: ' + message);
       console.error('Error updating expense:', error);
     },
     onSuccess: (data) => {
@@ -85,8 +96,9 @@ export const useMemberActions = (projectId: string) => {
   const deleteExpenseMutation = useMutation({
     mutationFn: ({memberId, expense}: {memberId: string, expense: Expense}) =>
       deleteExpense(projectId, memberId, expense.id),
-    onError: (error: Error) => {
-      toast.error('Error deleting expense: ' + error.message);
+    onError: (error: AxiosError) => {
+      const message = getErrorMessage(error);
+      toast.error('Error deleting expense: ' + message);
       console.error('Error deleting expense:', error);
     },
     onSuccess: (_data, variables) => {
@@ -118,12 +130,29 @@ export const useMemberActions = (projectId: string) => {
       deleteExpense: deleteExpenseMutation.isPending,
     },
     error: {
-      addMember: addMemberMutation.error,
-      updateMember: updateMemberMutation.error,
-      deleteMember: deleteMemberMutation.error,
-      addExpense: addExpenseMutation.error,
-      updateExpense: updateExpenseMutation.error,
-      deleteExpense: deleteExpenseMutation.error,
+      addMember: addMemberMutation.error
+        ? {...addMemberMutation.error, message: getErrorMessage(addMemberMutation.error)}
+        : undefined,
+
+      updateMember: updateMemberMutation.error
+        ? {...updateMemberMutation.error, message: getErrorMessage(updateMemberMutation.error)}
+        : undefined,
+
+      deleteMember: deleteMemberMutation.error
+        ? {...deleteMemberMutation.error, message: getErrorMessage(deleteMemberMutation.error)}
+        : undefined,
+
+      addExpense: addExpenseMutation.error
+        ? {...addExpenseMutation.error, message: getErrorMessage(addExpenseMutation.error)}
+        : undefined,
+
+      updateExpense: updateExpenseMutation.error
+        ? {...updateExpenseMutation.error, message: getErrorMessage(updateExpenseMutation.error)}
+        : undefined,
+
+      deleteExpense: deleteExpenseMutation.error
+        ? {...deleteExpenseMutation.error, message: getErrorMessage(deleteExpenseMutation.error)}
+        : undefined,
     },
   };
 };
