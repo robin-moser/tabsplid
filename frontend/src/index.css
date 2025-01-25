@@ -8,6 +8,10 @@
     border-neutral-300 dark:border-zinc-500
 }
 
+input.member-input:focus, input.input-ring:focus {
+    @apply border-primary-600 ring-primary-600
+    ring-inset outline-none ring-1
+}
 .member-input::placeholder {
     @apply text-neutral-400 dark:text-zinc-500
 }

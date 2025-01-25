@@ -228,7 +228,6 @@ const ProjectPage: React.FC<{
 
   return (
     <div>
-
       <div className={`
         w-full left-0 transition-all duration-300 ease-in-out text-sm text-center
         p-1 min-h-8 sticky top-0 z-50 text-white md:hidden ${hasUnsavedChanges
@@ -253,7 +252,7 @@ const ProjectPage: React.FC<{
               value={editedProjectName}
               onChange={(e) => setEditedProjectName(e.target.value)}
               className="
-                w-full px-2 py-2 border rounded-md
+                w-full px-2 py-2 border rounded-md input-ring
                 border-neutral-200 dark:border-zinc-500
                 bg-white dark:bg-zinc-700"
             />

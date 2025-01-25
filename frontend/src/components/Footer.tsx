@@ -1,7 +1,7 @@
 const Footer: React.FC = () => {
 
   return (
-    <footer className="flex items-center justify-between px-4 py-6 mt-6
+    <footer className="flex items-center justify-between px-4 py-6 mt-auto
       bg-neutral-200 dark:bg-zinc-800 text-gray-500 dark:text-neutral-500">
       <div className="flex-1"></div>
       <div className="container mx-auto text-center">

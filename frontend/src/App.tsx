@@ -24,23 +24,23 @@ const App = () => {
   return (
     <main className={` ${isDarkMode ? "dark" : ""} bg-neutral-100 dark:bg-zinc-900 dark:text-white`}>
       <div className="w-full min-h-screen flex flex-col">
-
         < Header
           toggleDarkMode={toggleDarkMode}
           isDarkMode={isDarkMode}
           showHeaderBorder={showHeaderBorder} />
-        <Router>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/project/:projectId"
-              element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} />}
-            />
-            <Route path="/demo"
-              element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} isDemo={true} />}
-            />
-          </Routes>
-        </Router>
-
+        <div className="mb-6">
+          <Router>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/project/:projectId"
+                element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} />}
+              />
+              <Route path="/demo"
+                element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} isDemo={true} />}
+              />
+            </Routes>
+          </Router>
+        </div>
         < Footer />
         <Toaster
           position="bottom-right"
