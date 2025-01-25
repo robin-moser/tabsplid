@@ -6,6 +6,7 @@ type ImportMetaEnv = {
   // You probably want to add `/src/vite-env.d.ts` to your .prettierignore
   VITE_API_URL: string
   VITE_DEMO_PROJECT_ID: string
+  VITE_APP_VERSION: string
   BASE_URL: string
   MODE: string
   DEV: boolean

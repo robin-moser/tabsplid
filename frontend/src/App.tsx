@@ -4,6 +4,7 @@ import {Toaster} from 'react-hot-toast';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import ProjectPage from "./pages/ProjectPage";
 
@@ -40,6 +41,7 @@ const App = () => {
           </Routes>
         </Router>
 
+        < Footer />
         <Toaster
           position="bottom-right"
           reverseOrder={false}

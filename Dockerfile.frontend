@@ -11,6 +11,10 @@ COPY frontend/ .
 RUN npm run build
 
 FROM registry.robinmoser.de/nginx:1
+
+ARG APP_VERSION
+ENV VITE_APP_VERSION=${APP_VERSION}
+
 COPY --from=build /app/dist /app/src
 COPY frontend/config/nginx /etc/nginx
 

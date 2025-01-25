@@ -33,6 +33,7 @@ jobs:
         with:
           platforms: linux/amd64
           file: ./Dockerfile.backend
+          build-args: APP_VERSION=${{ env.VERSION }}.${{ github.run_number }}
           push: true
           tags: |
             ${{ secrets.REGISTRY_URL }}/${{ env.IMAGENAME }}/backend:${{ env.VERSION }}
@@ -43,6 +44,7 @@ jobs:
         with:
           platforms: linux/amd64
           file: ./Dockerfile.frontend
+          build-args: APP_VERSION=${{ env.VERSION }}.${{ github.run_number }}
           push: true
           tags: |
             ${{ secrets.REGISTRY_URL }}/${{ env.IMAGENAME }}/frontend:${{ env.VERSION }}
