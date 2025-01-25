@@ -37,8 +37,8 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
       const updatedInvolvedMembers = allMemberIds
         .filter((id) => id !== member.id) // Exclude the deselected member
         .map((id) => {
-          const {id: mid, name} = allMembers.find((m) => m.id === id)!;
-          return {name, id: mid} as Member;
+          const {id: mid, name, order} = allMembers.find((m) => m.id === id)!;
+          return {name, order, id: mid} as Member;
         }); // Map back to Member objects
       setEditedExpense({...editedExpense, involved_members: updatedInvolvedMembers});
       return;
