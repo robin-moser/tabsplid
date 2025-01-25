@@ -60,7 +60,7 @@ const MemberItem: React.FC<MemberItemProps> = (
               <User size={22} />
             </span>
             <input
-              className="max-w-md px-2 border rounded-r-md member-input w-full"
+              className="max-w-md px-2 border rounded-r-md rounded-l-none member-input w-full"
               type="text"
               placeholder="Name"
               value={editedMemberName || ""}

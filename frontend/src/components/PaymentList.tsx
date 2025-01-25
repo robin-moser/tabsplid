@@ -77,14 +77,14 @@ const PaymentList = ({payments}: PaymentListProps) => {
         <p className="text-center w-5/6 mx-auto">
           Share the link to collaborate on this project. Note, that anyone with the link can view and edit the project.
         </p>
-        <Tooltip id="copy" content={tooltipContent} />
+        <Tooltip id="copy" content={tooltipContent} className="z-20" />
         <div className="flex justify-between items-center">
           <div className="overflow-scroll mr-0 py-4">
             <span className="text-primary-500 text-sm font-mono dark:text-primary-400 text-nowrap pr-4">
               {window.location.href}
             </span>
           </div>
-          <div className="w-8 h-8 -ml-8 mr-4 flex-shrink-0 bg-gradient-to-r from-transparent to-neutral-50 to-90%" />
+          <div className="w-8 h-8 -ml-8 mr-4 z-10 flex-shrink-0 bg-gradient-to-r from-transparent to-neutral-50 to-90%" />
           <div>
             <ClipboardCopyIcon
               className="w-7 h-7 bg-zinc-200 dark:bg-zinc-600 dark:text-white p-1.5 rounded-md"
