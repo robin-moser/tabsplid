@@ -15,6 +15,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
   {memberId, expense, onUpdateExpense, onDeleteExpense, allMembers}) => {
 
   const [editedExpense, setEditedExpense] = useState<Expense>(expense);
+  const [expenseAmount, setExpenseAmount] = useState<string>(expense.amount?.toString() || '');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -24,6 +25,17 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
   useEffect(() => {
     onUpdateExpense(memberId, editedExpense);
   }, [editedExpense]);
+
+  useEffect(() => {
+    const parsedAmount = parseFloat(expenseAmount);
+    if (isNaN(parsedAmount)) {
+      // If the input is not a valid number, reset to 0
+      setEditedExpense({...editedExpense, amount: 0});
+    } else {
+      // Otherwise, update the amount
+      setEditedExpense({...editedExpense, amount: parsedAmount});
+    }
+  }, [expenseAmount]);
 
   const handleRemoveExpense = () => {
     onDeleteExpense(memberId, expense);
@@ -78,12 +90,16 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
         />
         <input
           className="w-1/2 px-2 py-2 border rounded-md member-input"
-          value={editedExpense.amount || ''}
+          value={expenseAmount || ''}
           placeholder="Amount"
+          inputMode="decimal"
           onChange={(e) => {
-            const input = e.target.value;
-            const parsed = parseInt(input) || editedExpense.amount;
-            setEditedExpense({...editedExpense, amount: input === '' ? null : parsed, });
+            const parsed = e.target.value
+              .replace(/[^0-9,\.]/g, '') // Remove non-numeric and non-comma/period characters
+              .replace(/,/g, '.') // Replace commas with periods
+              .replace(/(\..*?)\.+/g, '$1') // Remove extra periods
+              .replace(/^(\d+(\.\d{0,2})?).*$/, '$1'); // Allow only two decimal places
+            setExpenseAmount(parsed);
           }}
         />
       </div>

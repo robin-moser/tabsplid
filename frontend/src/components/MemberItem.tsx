@@ -79,7 +79,7 @@ const MemberItem: React.FC<MemberItemProps> = (
         <div className="">
           <span className="ml-2 text-neutral-500 dark:text-zinc-400 flex gap-2 items-center">
             <Coins size={18} />
-            {member.expenses.reduce((acc, expense) => acc + (expense.amount || 0), 0)}
+            {parseFloat(member.expenses.reduce((acc, expense) => acc + (expense.amount || 0), 0).toFixed(10))}
           </span>
         </div>
       </div>
