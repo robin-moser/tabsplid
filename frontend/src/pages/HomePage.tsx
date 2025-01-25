@@ -26,7 +26,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col dark:bg-zinc-900">
+    <div className="min-h-screen flex flex-col dark:bg-zinc-900">
       {/* Hero Section */}
       <section className="
         bg-primary-100 dark:bg-zinc-800 text-center overflow-hidden relative
