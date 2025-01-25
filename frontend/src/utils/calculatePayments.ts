@@ -24,14 +24,14 @@ export const calculatePayments = (members: Member[]): Payment[] => {
   });
 
   members.forEach(member => {
-    if (member.balance < 0) {
+    if (member.balance < -1e-5) {
       members.forEach(otherMember => {
-        if (otherMember.balance > 0) {
+        if (otherMember.balance > 1e-5) {
           const amount = Math.min(-member.balance, otherMember.balance);
           updatedProjectPayments.push({
             from_member: member,
             to_member: otherMember,
-            amount: Math.round(amount * 100) / 100,
+            amount: Math.round(amount * 100) / 100
           });
           member.balance += amount;
           otherMember.balance -= amount;
