@@ -58,11 +58,20 @@ const HomePage = () => {
                     focus:outline-none focus:ring-2 focus:ring-primary-600 member-input" />
                 <button
                   type="submit"
-                  className="bg-primary-600 hover:bg-primary-700 flex-grow-0
+                  className="w-4/5 md:w-2/5 md:mx-2 bg-primary-600 hover:bg-primary-700
                     mt-4 px-6 py-2 text-white justify-center rounded-md self-stretch">
                   Create Project
                 </button>
+                <button
+                  type="button"
+                  onClick={() => navigate('/demo')}
+                  className="w-4/5 md:w-2/5 md:mx-2 bg-zinc-300 hover:bg-zinc-200 text-zinc-800 border-0 font-bold
+                    mt-4 px-6 py-2 justify-center rounded-md self-stretch">
+                  Show example
+                </button>
               </form>
+              <div className="max-w-md mx-auto w-full">
+              </div>
 
             </div>
           </div>
