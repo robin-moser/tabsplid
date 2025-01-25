@@ -8,7 +8,8 @@ sqlite_path = f"sqlite:///database.db"
 DATABASE_URL = os.getenv("DATABASE_URL") or sqlite_path
 
 # Create the database engine
-engine = create_engine(DATABASE_URL, echo=False)
+engine = create_engine(DATABASE_URL, echo=False,
+                       pool_pre_ping=True, pool_recycle=60)
 
 def init_db():
     SQLModel.metadata.create_all(engine)
