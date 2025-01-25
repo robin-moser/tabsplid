@@ -12,6 +12,8 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*{.tsx,.ts,.js}]
-indent_style = space
+[*{.tsx,.ts,.js,.html}]
 indent_size = 2
+
+[*{.css}]
+indent_size = 4

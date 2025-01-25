@@ -19,12 +19,6 @@ const MemberItem: React.FC<MemberItemProps> = (
   const [editedMemberName, setEditedMemberName] = useState<string | null>(member.name);
 
   useEffect(() => {
-    // console.log("1 Member updated in useEffect", member);
-    setEditedMemberName(member.name);
-  }, [member]);
-
-  useEffect(() => {
-    // console.log("2 Member updated in useEffect", editedMemberName);
     onUpdateMember({...member, name: editedMemberName});
   }, [editedMemberName]);
 

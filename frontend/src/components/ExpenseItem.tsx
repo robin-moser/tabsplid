@@ -24,18 +24,18 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
 
   useEffect(() => {
     onUpdateExpense(memberId, editedExpense);
-  }, [editedExpense]);
+  }, [memberId, editedExpense, onUpdateExpense]);
 
   useEffect(() => {
     const parsedAmount = parseFloat(expenseAmount);
     if (isNaN(parsedAmount)) {
       // If the input is not a valid number, reset to 0
-      setEditedExpense({...editedExpense, amount: 0});
+      setEditedExpense((prevExpense) => ({...prevExpense, amount: 0}));
     } else {
       // Otherwise, update the amount
-      setEditedExpense({...editedExpense, amount: parsedAmount});
+      setEditedExpense((prevExpense) => ({...prevExpense, amount: parsedAmount}));
     }
-  }, [expenseAmount]);
+  }, [expenseAmount, setEditedExpense]);
 
   const handleRemoveExpense = () => {
     onDeleteExpense(memberId, expense);
@@ -95,7 +95,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
           inputMode="decimal"
           onChange={(e) => {
             const parsed = e.target.value
-              .replace(/[^0-9,\.]/g, '') // Remove non-numeric and non-comma/period characters
+              .replace(/[^0-9,\\.]/g, '') // Remove non-numeric and non-comma/period characters
               .replace(/,/g, '.') // Replace commas with periods
               .replace(/(\..*?)\.+/g, '$1') // Remove extra periods
               .replace(/^(\d+(\.\d{0,2})?).*$/, '$1'); // Allow only two decimal places

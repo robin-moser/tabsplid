@@ -24,9 +24,8 @@ const ProjectPage: React.FC<{
   isDemo?: boolean;
 }> = ({setShowHeaderBorder, isDemo}) => {
 
-  const projectId = isDemo
-    ? import.meta.env.VITE_DEMO_PROJECT_ID
-    : useParams<{projectId: string}>().projectId;
+  const {projectId: routeProjectId} = useParams<{projectId: string}>();
+  const projectId = isDemo ? import.meta.env.VITE_DEMO_PROJECT_ID : routeProjectId;
 
   const navigate = useNavigate();
 
@@ -62,11 +61,11 @@ const ProjectPage: React.FC<{
 
   useEffect(() => {
     setShowHeaderBorder(true);
-  }, []);
+  }, [setShowHeaderBorder]);
 
   useEffect(() => {
     setUpdatedProjectPayments(calculatePayments(updatedMembers));
-  }, [updatedMembers]);
+  }, [updatedMembers, setUpdatedProjectPayments]);
 
   const {projectNameChanged, membersChanged} = detectChanges();
   const hasUnsavedChanges = projectNameChanged || membersChanged;
