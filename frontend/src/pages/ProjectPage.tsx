@@ -79,7 +79,7 @@ const ProjectPage: React.FC<{
 
     // Prevent saving in demo mode
     if (isDemo) {
-      toast.error(t('msg:demoModeChangesNotSaved'), {
+      toast.error(t('project:demoModeChangesNotSaved'), {
         className: '!bg-slate-900 dark:!bg-slate-700 !text-white !py-6 !px-8',
         position: 'top-right',
         duration: 5000,
@@ -218,7 +218,7 @@ const ProjectPage: React.FC<{
   }
 
   const handleProjectDelete = async () => {
-    if (!window.confirm(t('msg:confirmDeleteProject'))) return;
+    if (!window.confirm(t('project:confirmDeleteProject'))) return;
     deleteProject();
     navigate('/');
   }

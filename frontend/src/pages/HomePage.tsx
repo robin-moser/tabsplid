@@ -24,7 +24,7 @@ const HomePage = () => {
       const createdProject = await addProjectAsync({name: projectName} as Project);
       navigate(`/project/${createdProject.data.id}`);
     } catch (error) {
-      console.error(t('msg:errorCreatingProject'), error);
+      console.error(t('home:errorCreatingProject'), error);
     }
   };
 

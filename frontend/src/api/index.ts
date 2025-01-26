@@ -10,7 +10,7 @@ export const getErrorMessage = (error: AxiosError) => {
     case 'ERR_NETWORK':
       return i18n.t('common:error.networkError');
     case 'ECONNABORTED':
-      return i18n.t('common:error.requesetAborted');
+      return i18n.t('common:error.requestAborted');
     case 'ETIMEDOUT':
       return i18n.t('common:error.requestTimeout');
   }

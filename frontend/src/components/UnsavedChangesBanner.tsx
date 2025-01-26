@@ -21,7 +21,7 @@ const UnsavedChangesBanner: React.FC<UnsavedChangesBannerProps> = (
           flex-grow-0 mt-4 px-6 py-2
           text-white justify-center rounded-md self-stretch
            disabled:bg-dark-100`}>
-      {loading ? t('project:buttonSaving') : (
+      {loading ? t('project:button.saving') : (
         hasUnsavedChanges ? t('project:button.saveChanges') : t('project:button.projectUpToDate')
       )}
     </button>

@@ -3,7 +3,6 @@
     "createdDate": "Created: {{date}}",
     "deleteProjectTooltip": "Delete this project",
     "demoModeChangesNotSaved": "Demo mode: Changes won't be saved",
-    "errorCreatingProject": "Error creating project:",
 
     "projectLoadError": "Couldn't load the project: {{message}}",
     "projectNamePlaceholder": "Project Name",
