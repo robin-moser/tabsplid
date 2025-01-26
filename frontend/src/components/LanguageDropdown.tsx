@@ -1,15 +1,16 @@
 import {useState} from "react";
 import {useTranslation} from 'react-i18next';
 import {Languages} from 'lucide-react';
-import {DE, GB} from 'country-flag-icons/react/3x2'
+import {DE, ES, GB} from 'country-flag-icons/react/3x2'
 
 const LanguageDropdown = () => {
 
   const {t, i18n} = useTranslation(['common']);
   const [isOpen, setIsOpen] = useState(false);
   const languages = [
-    {code: 'en', name: 'English', flag: GB},
-    {code: 'de', name: 'German', flag: DE},
+    {code: 'en', name: t('common:lang.english'), flag: GB},
+    {code: 'de', name: t('common:lang.german'), flag: DE},
+    {code: 'es', name: t('common:lang.spanish'), flag: ES},
   ];
 
   const currentLang = i18n.language || window.localStorage.i18nextLng;

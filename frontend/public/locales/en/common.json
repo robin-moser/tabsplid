@@ -32,5 +32,9 @@
     "success.expenseUpdatedSuccessfully": "Expense \"{{name}}\" updated successfully",
     "success.memberAddedSuccessfully": "Member \"{{name}}\" added successfully",
     "success.memberDeletedSuccessfully": "Member \"{{name}}\" deleted successfully",
-    "success.memberUpdatedSuccessfully": "Member \"{{name}}\" updated successfully"
+    "success.memberUpdatedSuccessfully": "Member \"{{name}}\" updated successfully",
+
+    "lang.english": "English",
+    "lang.german": "German",
+    "lang.spanish": "Spanish"
 }

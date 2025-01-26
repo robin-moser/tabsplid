@@ -32,5 +32,9 @@
     "success.expenseUpdatedSuccessfully": "Ausgabe \"{{name}}\" erfolgreich aktualisiert",
     "success.memberAddedSuccessfully": "Mitglied \"{{name}}\" erfolgreich hinzugefügt",
     "success.memberDeletedSuccessfully": "Mitglied \"{{name}}\" erfolgreich gelöscht",
-    "success.memberUpdatedSuccessfully": "Mitglied \"{{name}}\" erfolgreich aktualisiert"
+    "success.memberUpdatedSuccessfully": "Mitglied \"{{name}}\" erfolgreich aktualisiert",
+
+    "lang.english": "Englisch",
+    "lang.german": "Deutsch",
+    "lang.spanish": "Spanisch"
 }

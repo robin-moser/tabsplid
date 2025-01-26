@@ -1,0 +1,40 @@
+{
+    "appTitle": "tabsplid - Simplifica los gastos de grupo",
+    "tabsplidLogo": "Logo de Tabsplid",
+    "toggleDarkMode": "Cambiar a modo oscuro",
+    "toggleLanguageSelection": "Cambiar selector de idioma",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "version": "Versión",
+
+    "error.tooManyRequests": "Demasiadas solicitudes. ¡Por favor, inténtalo de nuevo más tarde!",
+    "error.networkError": "Error de red. ¡Por favor, inténtalo de nuevo más tarde!",
+    "error.requestAborted": "Solicitud abortada. ¡Por favor, inténtalo de nuevo más tarde!",
+    "error.requestTimeout": "Tiempo de espera agotado. ¡Por favor, inténtalo de nuevo más tarde!",
+
+    "error.addingProject": "Error al añadir el proyecto: ",
+    "error.updatingProject": "Error al actualizar el proyecto: ",
+    "error.deletingProject": "Error al eliminar el proyecto: ",
+    "success.projectUpdatedSuccessfully": "Proyecto actualizado con éxito",
+    "success.projectDeletedSuccessfully": "Proyecto eliminado con éxito",
+    "success.successfullyDeletedProject": "Proyecto eliminado con éxito:",
+    "success.successfullyUpdatedProject": "Proyecto actualizado con éxito:",
+    "success.successfullyAddedProject": "Proyecto añadido con éxito:",
+
+    "error.addingExpense": "Error al añadir el gasto",
+    "error.addingMember": "Error al añadir el miembro",
+    "error.deletingExpense": "Error al eliminar el gasto",
+    "error.deletingMember": "Error al eliminar el miembro",
+    "error.updatingExpense": "Error al actualizar el gasto",
+    "error.updatingMember": "Error al actualizar el miembro",
+
+    "success.expenseAddedSuccessfully": "Gasto \"{{name}}\" añadido con éxito",
+    "success.expenseDeletedSuccessfully": "Gasto \"{{name}}\" eliminado con éxito",
+    "success.expenseUpdatedSuccessfully": "Gasto \"{{name}}\" actualizado con éxito",
+    "success.memberAddedSuccessfully": "Miembro \"{{name}}\" añadido con éxito",
+    "success.memberDeletedSuccessfully": "Miembro \"{{name}}\" eliminado con éxito",
+    "success.memberUpdatedSuccessfully": "Miembro \"{{name}}\" actualizado con éxito",
+
+    "lang.english": "Inglés",
+    "lang.german": "Alemán",
+    "lang.spanish": "Español"
+}
