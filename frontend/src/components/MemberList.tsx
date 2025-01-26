@@ -1,6 +1,7 @@
 import {CirclePlus} from 'lucide-react';
 import {Expense, Member} from '../types';
 import MemberItem from './MemberItem';
+import {useTranslation} from "react-i18next";
 
 interface MemberListProps {
   members: Member[];
@@ -13,6 +14,8 @@ interface MemberListProps {
 
 const MemberList: React.FC<MemberListProps> = (
   {members, onAddMember, onUpdateMember, onDeleteMember, onUpdateExpense, onDeleteExpense}) => {
+
+  const {t} = useTranslation(['project']);
 
   const addNewMember = () => {
     onAddMember({
@@ -46,10 +49,9 @@ const MemberList: React.FC<MemberListProps> = (
         onClick={addNewMember}
       >
         <CirclePlus size={18} />
-        Add Member
+        {t('project:button.addMember')}
       </button>
     </div>
   );
 };
-
 export default MemberList;

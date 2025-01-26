@@ -1,6 +1,7 @@
 import {useQuery, useMutation} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import {AxiosError} from 'axios';
+import i18n from "../i18n";
 
 import {Project} from '../types';
 import {
@@ -37,8 +38,8 @@ export const useProject = (projectId: string) => {
     mutationFn: (project: Project) => addProject(project),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error adding project: ' + message);
       console.error('Error adding project:', error);
+      toast.error(i18n.t('common:error.addingProject') + message);
     },
     onSuccess: (data) => {
       console.log('Successfully added project:', data);
@@ -50,13 +51,13 @@ export const useProject = (projectId: string) => {
     mutationFn: (project: Project) => updateProject(projectId, project),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error updating project: ' + message);
       console.error('Error updating project:', error);
+      toast.error(i18n.t('common:error.updatingProject') + message);
     },
     onSuccess: (data) => {
       // queryClient.invalidateQueries({queryKey: ['project', projectId]});
-      toast.success('Project updated successfully');
       console.log('Successfully updated project:', data);
+      toast.success(i18n.t('common:success.projectUpdatedSuccessfully'));
     },
   });
 
@@ -65,12 +66,12 @@ export const useProject = (projectId: string) => {
     mutationFn: () => deleteProject(projectId),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error deleting project: ' + message);
       console.error('Error deleting project:', error);
+      toast.error(i18n.t('common:error.deletingProject') + message);
     },
     onSuccess: (data) => {
-      toast.success('Project deleted successfully');
       console.log('Successfully deleted project:', data);
+      toast.success(i18n.t('common:success.projectDeletedSuccessfully'));
     }
   });
 

@@ -18,12 +18,14 @@ import {Member, Expense} from "../types";
 import {Trash2} from "lucide-react";
 import {Tooltip} from "react-tooltip";
 import toast from "react-hot-toast";
+import {useTranslation} from "react-i18next";
 
 const ProjectPage: React.FC<{
   setShowHeaderBorder: (show: boolean) => void;
   isDemo?: boolean;
 }> = ({setShowHeaderBorder, isDemo}) => {
 
+  const {t} = useTranslation(['project', 'common']);
   const {projectId: routeProjectId} = useParams<{projectId: string}>();
   const projectId = isDemo ? import.meta.env.VITE_DEMO_PROJECT_ID : routeProjectId;
 
@@ -77,7 +79,7 @@ const ProjectPage: React.FC<{
 
     // Prevent saving in demo mode
     if (isDemo) {
-      toast.error("Demo mode: Changes won't be saved", {
+      toast.error(t('msg:demoModeChangesNotSaved'), {
         className: '!bg-slate-900 dark:!bg-slate-700 !text-white !py-6 !px-8',
         position: 'top-right',
         duration: 5000,
@@ -216,55 +218,54 @@ const ProjectPage: React.FC<{
   }
 
   const handleProjectDelete = async () => {
-    // ask for confirmation
-    if (!window.confirm('Are you sure you want to delete this project?')) return;
+    if (!window.confirm(t('msg:confirmDeleteProject'))) return;
     deleteProject();
     navigate('/');
   }
 
   if (loading.getProject) return <LoadingSpinner />;
-  if (error.getProject) return <ErrorMessage error={`Couldn't load the project: ${error.getProject?.message}`} />;
-  if (!project) return <ErrorMessage error="Project not found" />;
+  if (error.getProject) return <ErrorMessage error={t('project:projectLoadError', {message: error.getProject?.message})} />;
+  if (!project) return <ErrorMessage error={t('project:projectNotFound')} />;
 
   return (
-    <div>
+    <div className="mb-6">
       <div className={`
-        w-full left-0 transition-all duration-300 ease-in-out text-sm text-center
-        p-1 min-h-8 sticky top-0 z-50 text-white md:hidden ${hasUnsavedChanges
+      w-full left-0 transition-all duration-300 ease-in-out text-sm text-center
+      p-1 min-h-8 sticky top-0 z-50 text-white md:hidden ${hasUnsavedChanges
           ? "opacity-100 bg-primary-600 cursor-pointer hover:bg-primary-700"
           : "opacity-0 bg-zinc-400"}`}
         onClick={hasUnsavedChanges ? handleSaveChanges : undefined}>
-        Unsaved changes! Click here or use the calculate button
+        {t('project:unsavedChangesNotice')}
       </div>
       <div className="
-        w-full max-w-6xl mx-auto mt-8
-        flex md:flex-row flex-col items-start
-        text-neutral-800 dark:text-neutral-300">
+      w-full max-w-6xl mx-auto mt-8
+      flex md:flex-row flex-col items-start
+      text-neutral-800 dark:text-neutral-300">
 
         {/* Left panel: Member List */}
         <div className="
-          px-4 border-neutral-200 dark:border-dark-400
-          max-w-lg w-full mx-auto md:mx-0 md:border-r-2 md:pr-6">
+        px-4 border-neutral-200 dark:border-dark-400
+        max-w-lg w-full mx-auto md:mx-0 md:border-r-2 md:pr-6">
           <div className="py-4 text-3xl font-bold flex flex-row gap-2">
             <input
               type="text"
-              placeholder="Project Name"
+              placeholder={t('project:projectNamePlaceholder')}
               value={editedProjectName}
               onChange={(e) => setEditedProjectName(e.target.value)}
               className="
-                w-full px-2 py-2 border rounded-md input-ring
-                border-neutral-200 dark:border-dark-100
-                bg-white dark:bg-dark-400"
+              w-full px-2 py-2 border rounded-md input-ring
+              border-neutral-200 dark:border-dark-100
+              bg-white dark:bg-dark-400"
             />
           </div>
           <div className="flex flex-row justify-left gap-2 items-center">
             <span className="text-sm relative -top-2 text-zinc-400">
-              Created: {formatDate(project.created_at)}
+              {t('project:createdDate', {date: formatDate(project.created_at)})}
             </span>
             <Tooltip id="delete" />
             <Trash2 className="relative -top-2 w-4 text-zinc-400 cursor-pointer"
               onClick={handleProjectDelete}
-              data-tooltip-content="Delete this project"
+              data-tooltip-content={t('project:deleteProjectTooltip')}
               data-tooltip-id="delete"
               data-tooltip-place="right"
             />
@@ -281,14 +282,14 @@ const ProjectPage: React.FC<{
 
         {/* Right Panel */}
         <div className="
-          w-full flex flex-col items-center mx-auto md:pl-6 px-4
-          justify-center self-start sticky top-0 max-w-md">
-          < UnsavedChangesBanner
+        w-full flex flex-col items-center mx-auto md:pl-6 px-4
+        justify-center self-start sticky top-0 max-w-md">
+          <UnsavedChangesBanner
             onSaveChanges={handleSaveChanges}
             hasUnsavedChanges={hasUnsavedChanges}
             loading={loading.updateProject}
           />
-          < PaymentList payments={updatedProjectPayments} />
+          <PaymentList payments={updatedProjectPayments} />
         </div>
       </div>
     </div>

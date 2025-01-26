@@ -1,10 +1,14 @@
 import {Sun, Moon} from "lucide-react";
+import {useTranslation} from "react-i18next";
+import LanguageDropdown from "./LanguageDropdown";
 
 const Header: React.FC<{
   toggleDarkMode: () => void;
   isDarkMode: boolean
   showHeaderBorder?: boolean;
 }> = ({toggleDarkMode, isDarkMode, showHeaderBorder}) => {
+
+  const {t} = useTranslation(['common']);
 
   return (
     <header className={`
@@ -13,16 +17,19 @@ const Header: React.FC<{
   `}>
       <div>
         <a href="/">
-          <img alt="Tabsplid Logo" src="/tabsplid.svg" className="w-52 mx-auto"></img>
+          <img alt={t('common:tabsplidLogo')} src="/tabsplid.svg" className="w-52 mx-auto"></img>
         </a>
         <div className="w-52 mx-auto hidden">
         </div>
-        <button onClick={toggleDarkMode} aria-label="Toggle Dark Mode"
-          className="dark:bg-dark-100 bg-zinc-300 p-2 rounded-lg absolute top-6 right-6">
-          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <div className="absolute top-6 right-6 flex gap-2">
+          <LanguageDropdown />
+          <button onClick={toggleDarkMode} aria-label={t('common:toggleDarkMode')}
+            className="dark:bg-dark-100 bg-zinc-300 p-2 rounded-lg">
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
       </div>
-    </header>
+    </header >
   );
 }
 

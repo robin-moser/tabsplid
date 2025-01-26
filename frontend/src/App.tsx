@@ -28,20 +28,18 @@ const App = () => {
           toggleDarkMode={toggleDarkMode}
           isDarkMode={isDarkMode}
           showHeaderBorder={showHeaderBorder} />
-        <div className="mb-6">
-          <Router>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/project/:projectId"
-                element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} />}
-              />
-              <Route path="/demo"
-                element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} isDemo={true} />}
-              />
-            </Routes>
-          </Router>
-        </div>
-        < Footer />
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/project/:projectId"
+              element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} />}
+            />
+            <Route path="/demo"
+              element={<ProjectPage setShowHeaderBorder={setShowHeaderBorder} isDemo={true} />}
+            />
+          </Routes>
+        </Router>
+        <Footer />
         <Toaster
           position="bottom-right"
           reverseOrder={false}

@@ -2,6 +2,7 @@ import {ClipboardCopyIcon, MoveRight} from "lucide-react";
 import {Member} from "../types";
 import {Tooltip} from "react-tooltip";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
 
 export interface Payment {
   from_member: Member,
@@ -18,15 +19,18 @@ export interface PaymentListProps {
 }
 
 const PaymentItem = ({payment}: PaymentProps) => {
+
+  const {t} = useTranslation(['project']);
+
   return (
     <div className="flex justify-between w-3/4 order-b-2 p-3 flex-1 items-center">
 
       <div className="flex flex-row gap-2 items-center">
-        <span>{payment.from_member.name || "Unnamed"}</span>
+        <span>{payment.from_member.name || t('project:placeholder.unnamed')}</span>
         <div>
           <MoveRight size={20} />
         </div>
-        <span>{payment.to_member.name || "Unnamed"}:</span>
+        <span>{payment.to_member.name || t('project:placeholder.unnamed')}:</span>
       </div>
 
       <span className="
@@ -38,7 +42,9 @@ const PaymentItem = ({payment}: PaymentProps) => {
 
 const PaymentList = ({payments}: PaymentListProps) => {
 
-  const [tooltipContent, setTooltipContent] = useState("Copy link to clipboard");
+  const {t} = useTranslation(['project']);
+  const [tooltipContent, setTooltipContent] = useState(t('project:placeholder.copyLinkToClipboard'));
+
 
   // balanced if no payments exist but number of expenses are > 0
   const isBalanced = payments.length === 0;
@@ -54,14 +60,14 @@ const PaymentList = ({payments}: PaymentListProps) => {
           { /* display this only if payments exist */}
           {!isBalanced ? (
             <>
-              <h3 className="w-full text-center font-bold text-lg border-b-2 py-4 dark:border-dark-50">How to settle depts</h3>
+              <h3 className="w-full text-center font-bold text-lg border-b-2 py-4 dark:border-dark-50">{t('project:placeholder.howToSettleDepts')}</h3>
               {payments.map((payment, index) => (
                 <PaymentItem key={index} payment={payment} />
               ))}
             </>
           ) : (
             <>
-              <h3 className="w-full text-center font-bold text-lg py-4">No payments required</h3>
+              <h3 className="w-full text-center font-bold text-lg py-4">{t('project:placeholder.noPaymentsRequired')}</h3>
             </>
           )}
         </div>
@@ -72,10 +78,10 @@ const PaymentList = ({payments}: PaymentListProps) => {
         border-neutral-200 dark:border-dark-400 px-6 mb-6 border rounded-lg shadow-lg
         text-neutral-800 dark:text-neutral-300 w-full mx-auto">
         <h3 className="w-full text-center font-bold text-lg border-b-2 py-4 mb-4 dark:border-dark-50">
-          Collaborate
+          {t('project:placeholder.collaborate')}
         </h3>
         <p className="text-center w-5/6 mx-auto">
-          Share the link to collaborate on this project. Note, that anyone with the link can view and edit the project.
+          {t('project:placeholder.shareTheLink')}
         </p>
         <Tooltip id="copy" content={tooltipContent} className="z-20" />
         <div className="flex justify-between items-center">
@@ -90,13 +96,13 @@ const PaymentList = ({payments}: PaymentListProps) => {
             <ClipboardCopyIcon
               className="w-8 h-8 bg-zinc-200 dark:bg-dark-100 dark:text-white p-2 rounded-md"
               data-tooltip-id="copy"
-              data-tooltip-content="Copy link to clipboard"
+              data-tooltip-content={tooltipContent}
               data-tooltip-place="bottom"
               onClick={() => {
                 navigator.clipboard.writeText(window.location.href)
-                setTooltipContent("Copied to clipboard!")
+                setTooltipContent(t('project:placeholder.copiedToClipboard'))
                 setTimeout(() => {
-                  setTooltipContent("Copy link to clipboard");
+                  setTooltipContent(t('project:placeholder.copyLinkToClipboard'));
                 }, 1000)
               }}
             />
@@ -104,7 +110,6 @@ const PaymentList = ({payments}: PaymentListProps) => {
         </div>
       </div>
     </>
-
   )
 }
 

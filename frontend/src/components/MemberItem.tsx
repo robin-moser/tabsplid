@@ -4,6 +4,7 @@ import {Tooltip} from 'react-tooltip'
 
 import ExpenseItem from "./ExpenseItem";
 import {Expense, Member} from "../types";
+import {useTranslation} from "react-i18next";
 
 interface MemberItemProps {
   member: Member;
@@ -17,6 +18,8 @@ interface MemberItemProps {
 const MemberItem: React.FC<MemberItemProps> = (
   {member, onUpdateMember, onDeleteMember, onUpdateExpense, onDeleteExpense, allMembers}) => {
   const [editedMemberName, setEditedMemberName] = useState<string | null>(member.name);
+
+  const {t} = useTranslation(['project']);
 
   useEffect(() => {
     onUpdateMember({...member, name: editedMemberName});
@@ -57,7 +60,7 @@ const MemberItem: React.FC<MemberItemProps> = (
             <input
               className="max-w-md px-2 border rounded-r-md rounded-l-none member-input w-full"
               type="text"
-              placeholder="Name"
+              placeholder={t('project:placeholder.memberName')}
               value={editedMemberName || ""}
               onChange={(e) => setEditedMemberName(e.target.value)}
             />
@@ -67,7 +70,7 @@ const MemberItem: React.FC<MemberItemProps> = (
             size={20}
             className="cursor-pointer text-zinc-400"
             onClick={handleRemoveMember}
-            data-tooltip-content="Remove this member"
+            data-tooltip-content={t('project:tooltip.removeThisMember')}
             data-tooltip-id="remove"
           />
         </div>
@@ -96,11 +99,10 @@ const MemberItem: React.FC<MemberItemProps> = (
           onClick={addNewExpense}
         >
           <CirclePlus size={18} />
-          Add Expense
+          {t('project:button.addExpense')}
         </button>
       </div>
-    </div >
-
+    </div>
   );
 };
 

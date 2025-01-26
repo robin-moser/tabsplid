@@ -2,6 +2,8 @@ import {useMutation, useQueryClient} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import {AxiosError} from 'axios';
 
+import {t} from 'i18next';
+
 import {Member, Expense} from '../types';
 import {
   addMember,
@@ -21,12 +23,12 @@ export const useMemberActions = (projectId: string) => {
     mutationFn: (newMember: Member) => addMember(projectId, newMember),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error adding member: ' + message);
+      toast.error(t('common:error.addingMember') + ': ' + message);
       console.error('Error adding member:', error);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({queryKey: ['project', projectId]});
-      toast.success(`Member "${data.data.name}" added successfully`);
+      toast.success(t('common:success.memberAddedSuccessfully', {name: data.data.name}));
       console.log('Successfully added member:', data);
     },
   });
@@ -36,12 +38,12 @@ export const useMemberActions = (projectId: string) => {
     mutationFn: (member: Member) => updateMember(projectId, member),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error updating member: ' + message);
+      toast.error(t('common:error.updatingMember') + ': ' + message);
       console.error('Error updating member:', error);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({queryKey: ['project', projectId]});
-      toast.success(`Member "${data.data.name}" updated successfully`);
+      toast.success(t('common:success.memberUpdatedSuccessfully', {name: data.data.name}));
       console.log('Successfully updated member', data);
     },
   });
@@ -51,12 +53,12 @@ export const useMemberActions = (projectId: string) => {
     mutationFn: (member: Member) => deleteMember(projectId, member.id),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error deleting member: ' + message);
+      toast.error(t('common:error.deletingMember') + ': ' + message);
       console.error('Error deleting member:', error);
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({queryKey: ['project', projectId]});
-      toast.success(`Member "${variables.name}" deleted successfully`);
+      toast.success(t('common:success.memberDeletedSuccessfully', {name: variables.name}));
       console.log('Successfully deleted member', variables);
     },
   });
@@ -67,12 +69,12 @@ export const useMemberActions = (projectId: string) => {
       addExpense(projectId, memberId, expense),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error adding expense: ' + message);
+      toast.error(t('common:error.addingExpense') + ': ' + message);
       console.error('Error adding expense:', error);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({queryKey: ['project', projectId]});
-      toast.success(`Expense "${data.data.name}" added successfully`);
+      toast.success(t('common:success.expenseAddedSuccessfully', {name: data.data.name}));
       console.log('Successfully added expense:', data);
     },
   });
@@ -83,12 +85,12 @@ export const useMemberActions = (projectId: string) => {
       updateExpense(projectId, memberId, expense),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error updating expense: ' + message);
+      toast.error(t('common:error.updatingExpense') + ': ' + message);
       console.error('Error updating expense:', error);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({queryKey: ['project', projectId]});
-      toast.success(`Expense "${data.data.name}" updated successfully`);
+      toast.success(t('common:success.expenseUpdatedSuccessfully', {name: data.data.name}));
       console.log('Successfully updated expense', data);
     },
   });
@@ -98,12 +100,12 @@ export const useMemberActions = (projectId: string) => {
       deleteExpense(projectId, memberId, expense.id),
     onError: (error: AxiosError) => {
       const message = getErrorMessage(error);
-      toast.error('Error deleting expense: ' + message);
+      toast.error(t('common:error.deletingExpense') + ': ' + message);
       console.error('Error deleting expense:', error);
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({queryKey: ['project', projectId]});
-      toast.success(`Expense "${variables.expense.name}" deleted successfully`);
+      toast.success(t('common:success.expenseDeletedSuccessfully', {name: variables.expense.name}));
       console.log('Successfully deleted expense', variables);
     },
   });

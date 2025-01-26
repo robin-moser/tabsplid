@@ -1,0 +1,38 @@
+{
+    "confirmDeleteProject": "Möchtest du dieses Projekt wirklich löschen?",
+    "createdDate": "Erstellt: {{date}}",
+    "deleteProjectTooltip": "Dieses Projekt löschen",
+    "demoModeChangesNotSaved": "Demo-Modus: Änderungen werden nicht gespeichert",
+    "errorCreatingProject": "Fehler beim Erstellen des Projekts:",
+
+    "projectLoadError": "Projekt konnte nicht geladen werden: {{message}}",
+    "projectNamePlaceholder": "Projektname",
+    "projectNotFound": "Projekt nicht gefunden",
+    "selectInvolvedMembers": "Beteiligte Mitglieder auswählen",
+
+    "unnamedMember": "Unbenanntes Mitglied",
+    "unsavedChangesNotice": "Nicht gespeicherte Änderungen! Klicke hier oder benutze die Berechnen-Schaltfläche",
+
+    "tooltip.deleteProject": "Dieses Projekt löschen",
+    "tooltip.involvedMembers": "Mitglieder von der Ausgabe ausschließen",
+    "tooltip.removeExpense": "Diese Ausgabe entfernen",
+    "tooltip.removeThisMember": "Dieses Mitglied entfernen",
+
+    "button.addExpense": "Ausgabe hinzufügen",
+    "button.addMember": "Mitglied hinzufügen",
+    "button.close": "Schließen",
+    "button.projectUpToDate": "Projekt ist auf dem neuesten Stand",
+    "button.saveChanges": "Änderungen speichern",
+    "button.saving": "Speichern...",
+
+    "placeholder.collaborate": "Zusammenarbeiten",
+    "placeholder.copiedToClipboard": "In die Zwischenablage kopiert!",
+    "placeholder.copyLinkToClipboard": "Link in die Zwischenablage kopieren",
+    "placeholder.expenseAmount": "Betrag",
+    "placeholder.expenseName": "Ausgabe",
+    "placeholder.howToSettleDepts": "Schuldenausgleich",
+    "placeholder.memberName": "Name",
+    "placeholder.noPaymentsRequired": "Keine Zahlungen erforderlich",
+    "placeholder.shareTheLink": "Teile den Link, um an diesem Projekt zusammenzuarbeiten. Beachte, dass jeder mit dem Link das Projekt ansehen und bearbeiten kann.",
+    "placeholder.unnamed": "Unbenannt"
+}

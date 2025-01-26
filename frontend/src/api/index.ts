@@ -1,14 +1,23 @@
 import axios, {AxiosError} from "axios";
 import {Project, Member, Expense} from "../types";
+import i18n from "../i18n";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-
 // Print different error messages based on the error code
 export const getErrorMessage = (error: AxiosError) => {
+  switch (error.code) {
+    case 'ERR_NETWORK':
+      return i18n.t('common:error.networkError');
+    case 'ECONNABORTED':
+      return i18n.t('common:error.requesetAborted');
+    case 'ETIMEDOUT':
+      return i18n.t('common:error.requestTimeout');
+  }
+
   switch (error.status) {
     case 429:
-      return 'Too many requests. Please try again later!';
+      return i18n.t('common:error.tooManyRequests');
     default:
       return error.message;
   }

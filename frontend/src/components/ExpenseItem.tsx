@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {Expense, Member} from "../types";
 import {CircleMinus, Users} from "lucide-react";
 import {Tooltip} from "react-tooltip";
+import {useTranslation} from "react-i18next";
 
 interface ExpenseItemProps {
   memberId: string;
@@ -17,6 +18,8 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
   const [editedExpense, setEditedExpense] = useState<Expense>(expense);
   const [expenseAmount, setExpenseAmount] = useState<string>(expense.amount?.toString() || '');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {t} = useTranslation(['project']);
 
   useEffect(() => {
     setEditedExpense(expense);
@@ -85,13 +88,13 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
           className="w-full px-2 py-2 border rounded-md member-input"
           type="text"
           value={editedExpense.name || ''}
-          placeholder="Expense"
+          placeholder={t('project:placeholder.expenseName')}
           onChange={(e) => setEditedExpense({...editedExpense, name: e.target.value})}
         />
         <input
           className="w-1/2 px-2 py-2 border rounded-md member-input"
           value={expenseAmount || ''}
-          placeholder="Amount"
+          placeholder={t('project:placeholder.expenseAmount')}
           inputMode="decimal"
           onChange={(e) => {
             const parsed = e.target.value
@@ -109,18 +112,17 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
           size={20}
           className="cursor-pointer text-zinc-400"
           onClick={handleRemoveExpense}
-          data-tooltip-content="Remove this expense"
+          data-tooltip-content={t('project:tooltip.removeExpense')}
           data-tooltip-id="expenseItem"
         />
         <Users
           size={20}
           className={`cursor-pointer ${isInvolvedSubset() ? "text-primary-500" : "text-zinc-400"}`}
           onClick={() => isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true)}
-          data-tooltip-content="Exclude members from the expense"
+          data-tooltip-content={t('project:tooltip.involvedMembers')}
           data-tooltip-id="expenseItem"
         />
       </div>
-
 
       {isModalOpen && (
         <div className="
@@ -128,9 +130,9 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
           bg-black bg-opacity-50 z-50 dark:bg-opacity-60">
           <div className="fixed inset-0 -z-10" onClick={() => setIsModalOpen(false)} />
           <div className="
-          bg-white rounded-lg p-6 w-1/8 shadow-lg px-10
-          dark:bg-dark-600 dark:border-dark-200 dark:border-2">
-            <h2 className="text-xl font-semibold mb-4">Select Involved Members</h2>
+            bg-white rounded-lg p-6 w-1/8 shadow-lg px-10
+            dark:bg-dark-600 dark:border-dark-200 dark:border-2">
+            <h2 className="text-xl font-semibold mb-4">{t('project:selectInvolvedMembers')}</h2>
             <div className="flex flex-col gap-2">
               {allMembers.map((member) => {
                 const effectiveMembers = getEffectiveMembers();
@@ -145,12 +147,12 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
                       onChange={() => toggleMemberSelection(member)}
                     />
                     <label htmlFor={member.id} className="
-                  inline-flex items-center justify-between w-full p-3 rounded-lg cursor-pointer border-2
-                  text-zinc-800 bg-white border-zinc-200 hover:bg-zinc-100
-                  dark:text-gray-100 dark:bg-dark-100 dark:border-dark-100 dark:hover:bg-dark-200
-                  peer-checked:bg-primary-600 peer-checked:border-transparent peer-checked:text-white
-                  peer-checked:hover:bg-primary-700">
-                      {member.name || "Unnamed Member"}
+                      inline-flex items-center justify-between w-full p-3 rounded-lg cursor-pointer border-2
+                      text-zinc-800 bg-white border-zinc-200 hover:bg-zinc-100
+                      dark:text-gray-100 dark:bg-dark-100 dark:border-dark-100 dark:hover:bg-dark-200
+                      peer-checked:bg-primary-600 peer-checked:border-transparent peer-checked:text-white
+                      peer-checked:hover:bg-primary-700">
+                      {member.name || t('project:unnamedMember')}
                     </label>
                   </div>
                 );
@@ -161,7 +163,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
                 className="px-4 py-2 bg-zinc-300 dark:bg-dark-100 rounded-md"
                 onClick={() => setIsModalOpen(false)}
               >
-                Close
+                {t('project:button.close')}
               </button>
             </div>
           </div>

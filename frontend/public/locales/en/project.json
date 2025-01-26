@@ -1,0 +1,38 @@
+{
+    "confirmDeleteProject": "Are you sure you want to delete this project?",
+    "createdDate": "Created: {{date}}",
+    "deleteProjectTooltip": "Delete this project",
+    "demoModeChangesNotSaved": "Demo mode: Changes won't be saved",
+    "errorCreatingProject": "Error creating project:",
+
+    "projectLoadError": "Couldn't load the project: {{message}}",
+    "projectNamePlaceholder": "Project Name",
+    "projectNotFound": "Project not found",
+    "selectInvolvedMembers": "Select Involved Members",
+
+    "unnamedMember": "Unnamed Member",
+    "unsavedChangesNotice": "Unsaved changes! Click here or use the calculate button",
+
+    "tooltip.deleteProject": "Delete this project",
+    "tooltip.involvedMembers": "Exclude members from the expense",
+    "tooltip.removeExpense": "Remove this expense",
+    "tooltip.removeThisMember": "Remove this member",
+
+    "button.addExpense": "Add Expense",
+    "button.addMember": "Add Member",
+    "button.close": "Close",
+    "button.projectUpToDate": "Project up to date",
+    "button.saveChanges": "Save Changes",
+    "button.saving": "Saving...",
+
+    "placeholder.collaborate": "Collaborate",
+    "placeholder.copiedToClipboard": "Copied to clipboard!",
+    "placeholder.copyLinkToClipboard": "Copy link to clipboard",
+    "placeholder.expenseAmount": "Amount",
+    "placeholder.expenseName": "Expense",
+    "placeholder.howToSettleDepts": "How to settle depts",
+    "placeholder.memberName": "Name",
+    "placeholder.noPaymentsRequired": "No payments required",
+    "placeholder.shareTheLink": "Share the link to collaborate on this project. Note, that anyone with the link can view and edit the project.",
+    "placeholder.unnamed": "Unnamed"
+}
