@@ -15,13 +15,12 @@ const Header: React.FC<{
       ${showHeaderBorder ? "border-b-2" : ""}
       p-6 text-center border-neutral-200 dark:border-dark-400
   `}>
-      <div>
+      <div className="flex items-center justify-between">
+        <div className="sm:flex-1 hidden sm:block" />
         <a href="/">
           <img alt={t('common:tabsplidLogo')} src="/tabsplid.svg" className="w-52 mx-auto"></img>
         </a>
-        <div className="w-52 mx-auto hidden">
-        </div>
-        <div className="absolute top-6 right-6 flex gap-2">
+        <div className="top-6 right-6 flex gap-2 sm:flex-1 self-start justify-end">
           <LanguageDropdown />
           <button onClick={toggleDarkMode} aria-label={t('common:toggleDarkMode')}
             className="dark:bg-dark-100 bg-zinc-300 p-2 rounded-lg">

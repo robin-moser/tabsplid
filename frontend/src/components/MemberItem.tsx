@@ -53,12 +53,12 @@ const MemberItem: React.FC<MemberItemProps> = (
       <div className="flex flex-row items-center justify-between
         border-b-2 dark:border-dark-50 pb-4 mb-4">
         <div className="flex items-center gap-2">
-          <div className="flex items-left">
-            <span className="px-3 py-3 rounded-l-md border-r-0 member-input">
+          <div className="flex items-left dark:shadow-lg dark:shadow-dark-700">
+            <span className="px-3 py-3 rounded-l-md border border-r-0 member-input !shadow-none">
               <User size={22} />
             </span>
             <input
-              className="max-w-md px-2 border rounded-r-md rounded-l-none member-input w-full"
+              className="max-w-md px-2 border rounded-r-md rounded-l-none member-input !shadow-none w-full"
               type="text"
               placeholder={t('project:placeholder.memberName')}
               value={editedMemberName || ""}
@@ -92,15 +92,17 @@ const MemberItem: React.FC<MemberItemProps> = (
             allMembers={allMembers}
           />
         ))}
-        <button className="
+        <div className="relative z-20">
+          <button className="
           flex items-center justify-center gap-2 border w-3/4
           hover:bg-zinc-300 dark:hover:bg-dark-400
           px-4 py-2 rounded-md member-input"
-          onClick={addNewExpense}
-        >
-          <CirclePlus size={18} />
-          {t('project:button.addExpense')}
-        </button>
+            onClick={addNewExpense}
+          >
+            <CirclePlus size={18} />
+            {t('project:button.addExpense')}
+          </button>
+        </div>
       </div>
     </div>
   );

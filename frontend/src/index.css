@@ -6,7 +6,7 @@
     @apply bg-zinc-200 dark:bg-dark-400
     text-neutral-800 dark:text-gray-200
     border-neutral-300 dark:border-dark-100
-    dark:shadow-md dark:shadow-dark-800
+    dark:shadow-lg dark:shadow-dark-700
 }
 
 input.member-input:focus, input.input-ring:focus {

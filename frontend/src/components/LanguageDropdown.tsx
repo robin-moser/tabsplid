@@ -22,22 +22,27 @@ const LanguageDropdown = () => {
   return (
     <div>
       {isOpen && (
-        <div className="absolute min-w-32 right-20 mr-2 p-2
-          bg-white dark:bg-dark-200 shadow-lg rounded-lg z-10">
-          {languages.map((lang) => {
-            const Flag = lang.flag;
-            return (
-              <button
-                key={lang.code}
-                onClick={() => handleLanguageChange(lang.code)}
-                className={`flex items-center p-2 w-full rounded-lg transition-colors duration-200
+        <>
+          <div className="absolute right-[4.6rem] mt-12
+          w-6 h-6 bg-white dark:bg-dark-200 transform rotate-45" />
+
+          <div className="absolute min-w-32 right-4 mt-14 mr-2 p-2
+          bg-white dark:bg-dark-200 shadow-lg rounded-lg z-50">
+            {languages.map((lang) => {
+              const Flag = lang.flag;
+              return (
+                <button
+                  key={lang.code}
+                  onClick={() => handleLanguageChange(lang.code)}
+                  className={`flex items-center p-2 w-full rounded-lg transition-colors duration-200
                 ${currentLang === lang.code ? 'bg-primary-500 text-white' : 'hover:bg-dark-300'}`}
-              >
-                <Flag className="w-6 mr-2 rounded-sm" />{lang.name}
-              </button>
-            );
-          })}
-        </div>
+                >
+                  <Flag className="w-6 mr-2 rounded-sm" />{lang.name}
+                </button>
+              );
+            })}
+          </div>
+        </>
       )}
       <button
         onClick={() => setIsOpen(!isOpen)} aria-label={t('common:toggleLanguageSelection')}
