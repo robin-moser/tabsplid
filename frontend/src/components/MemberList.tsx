@@ -39,9 +39,9 @@ const MemberList: React.FC<MemberListProps> = (
       ))}
       <button className="
         flex items-center justify-center gap-2 w-full
-        p-4 py-2 my-6 rounded-md bg-white dark:bg-zinc-800
-        border-neutral-200 dark:border-zinc-700
-        hover:bg-neutral-200 dark:hover:bg-zinc-700
+        p-4 py-2 my-6 rounded-md bg-white dark:bg-dark-400
+        border-neutral-200 dark:border-dark-100
+        hover:bg-neutral-200 dark:hover:bg-dark-200
         border"
         onClick={addNewMember}
       >

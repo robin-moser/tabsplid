@@ -43,14 +43,15 @@ const MemberItem: React.FC<MemberItemProps> = (
 
   return (
     <div className="
-        bg-neutral-50 dark:bg-zinc-800
-        shadow-neutral-200 dark:shadow-zinc-950
-        border-neutral-200 dark:border-zinc-700
+        bg-neutral-50 dark:bg-dark-600
+        shadow-neutral-200 dark:shadow-dark-950
+        border-neutral-200 dark:border-dark-400
         p-4 my-6 border rounded-lg shadow-lg">
-      <div className=" flex flex-row items-center justify-between mb-2">
+      <div className="flex flex-row items-center justify-between
+        border-b-2 dark:border-dark-50 pb-4 mb-4">
         <div className="flex items-center gap-2">
           <div className="flex items-left">
-            <span className="px-3 py-3 rounded-l-md border border-r-0 member-input">
+            <span className="px-3 py-3 rounded-l-md border-r-0 member-input">
               <User size={22} />
             </span>
             <input
@@ -71,13 +72,12 @@ const MemberItem: React.FC<MemberItemProps> = (
           />
         </div>
         <div className="">
-          <span className="ml-2 text-neutral-500 dark:text-zinc-400 flex gap-2 items-center">
+          <span className="ml-2 text-neutral-500 dark:text-gray-400 flex gap-2 items-center">
             <Coins size={18} />
             {parseFloat(member.expenses.reduce((acc, expense) => acc + (expense.amount || 0), 0).toFixed(10))}
           </span>
         </div>
       </div>
-      <hr className="my-4" />
       <div className="w-full">
         {member.expenses.map((expense, index) => (
           <ExpenseItem
@@ -91,7 +91,7 @@ const MemberItem: React.FC<MemberItemProps> = (
         ))}
         <button className="
           flex items-center justify-center gap-2 border w-3/4
-          hover:bg-zinc-300 dark:hover:bg-zinc-600
+          hover:bg-zinc-300 dark:hover:bg-dark-400
           px-4 py-2 rounded-md member-input"
           onClick={addNewExpense}
         >

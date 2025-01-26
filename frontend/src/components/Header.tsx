@@ -9,7 +9,7 @@ const Header: React.FC<{
   return (
     <header className={`
       ${showHeaderBorder ? "border-b-2" : ""}
-      p-6 text-center border-neutral-200 dark:border-zinc-800
+      p-6 text-center border-neutral-200 dark:border-dark-400
   `}>
       <div>
         <a href="/">
@@ -18,7 +18,7 @@ const Header: React.FC<{
         <div className="w-52 mx-auto hidden">
         </div>
         <button onClick={toggleDarkMode} aria-label="Toggle Dark Mode"
-          className="dark:bg-zinc-600 bg-zinc-300 p-2 rounded-lg absolute top-6 right-6">
+          className="dark:bg-dark-100 bg-zinc-300 p-2 rounded-lg absolute top-6 right-6">
           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
         </button>
       </div>

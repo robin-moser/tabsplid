@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 .member-input {
-    @apply bg-zinc-200 dark:bg-zinc-700
-    text-neutral-800 dark:text-zinc-200
-    border-neutral-300 dark:border-zinc-500
+    @apply bg-zinc-200 dark:bg-dark-400
+    text-neutral-800 dark:text-gray-200
+    border-neutral-300 dark:border-dark-100
+    dark:shadow-md dark:shadow-dark-800
 }
 
 input.member-input:focus, input.input-ring:focus {
@@ -13,7 +14,12 @@ input.member-input:focus, input.input-ring:focus {
     ring-inset outline-none ring-1
 }
 .member-input::placeholder {
-    @apply text-neutral-400 dark:text-zinc-500
+    @apply text-neutral-400 dark:text-gray-500
+}
+
+.react-tooltip:where(.dark, .dark *) {
+    @apply dark:!bg-gray-100 dark:!text-black
+
 }
 
 button {

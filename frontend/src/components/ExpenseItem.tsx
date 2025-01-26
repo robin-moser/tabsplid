@@ -129,7 +129,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
           <div className="fixed inset-0 -z-10" onClick={() => setIsModalOpen(false)} />
           <div className="
           bg-white rounded-lg p-6 w-1/8 shadow-lg px-10
-          dark:bg-zinc-800 dark:border-zinc-600 dark:border-2">
+          dark:bg-dark-600 dark:border-dark-200 dark:border-2">
             <h2 className="text-xl font-semibold mb-4">Select Involved Members</h2>
             <div className="flex flex-col gap-2">
               {allMembers.map((member) => {
@@ -147,7 +147,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
                     <label htmlFor={member.id} className="
                   inline-flex items-center justify-between w-full p-3 rounded-lg cursor-pointer border-2
                   text-zinc-800 bg-white border-zinc-200 hover:bg-zinc-100
-                  dark:text-zinc-100 dark:bg-zinc-700 dark:border-zinc-600 dark:hover:bg-zinc-600
+                  dark:text-gray-100 dark:bg-dark-100 dark:border-dark-100 dark:hover:bg-dark-200
                   peer-checked:bg-primary-600 peer-checked:border-transparent peer-checked:text-white
                   peer-checked:hover:bg-primary-700">
                       {member.name || "Unnamed Member"}
@@ -158,7 +158,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
             </div>
             <div className="flex justify-end mt-4 gap-2">
               <button
-                className="px-4 py-2 bg-zinc-300 dark:bg-zinc-600 rounded-md"
+                className="px-4 py-2 bg-zinc-300 dark:bg-dark-100 rounded-md"
                 onClick={() => setIsModalOpen(false)}
               >
                 Close

@@ -27,10 +27,10 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col dark:bg-zinc-900">
+    <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
       <section className="
-        bg-primary-100 dark:bg-zinc-800 text-center overflow-hidden relative
+        bg-primary-100 dark:bg-dark-700 text-center overflow-hidden relative
         bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="absolute inset-0 dark:bg-black bg-primary-900 opacity-70 dark:opacity-40 z-0"></div>
         <div className="max-w-6xl mx-auto z-10 relative p-6 sm:p-12 md:p-24">
@@ -42,10 +42,10 @@ const HomePage = () => {
           </p>
 
           <div className="max-w-lg
-            bg-neutral-50 dark:bg-zinc-800
-            border-neutral-200 dark:border-zinc-700
+            bg-neutral-50 dark:bg-dark-700
+            border-neutral-200 dark:border-dark-400
             px-6 my-6 border rounded-lg shadow-lg
-            text-neutral-800 dark:text-zinc-300
+            text-neutral-800 dark:text-neutral-100
             w-full mx-auto overflow-hidden relative">
 
             <div className="flex flex-col items-center relative py-8">
@@ -66,8 +66,8 @@ const HomePage = () => {
                 <button
                   type="button"
                   onClick={() => navigate('/demo')}
-                  className="w-4/5 md:w-2/5 md:mx-2 bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700
-                  dark:bg-zinc-600 text-zinc-800 dark:text-neutral-200 border-0 font-bold
+                  className="w-4/5 md:w-2/5 md:mx-2 bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-dark-400
+                  dark:bg-dark-400 text-dark-700 dark:text-neutral-200 border-0 font-bold
                     mt-4 px-6 py-2 justify-center rounded-md self-stretch">
                   Show Example
                 </button>
@@ -88,7 +88,7 @@ const HomePage = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 px-6">
           <div className="text-center">
-            <div className="bg-primary-100 dark:bg-zinc-700 rounded-full w-16 h-16 mx-auto mb-4">
+            <div className="bg-primary-100 dark:bg-dark-400 rounded-full w-16 h-16 mx-auto mb-4">
               <LockOpen className="w-full h-full p-5" />
             </div>
             <h3 className="text-lg font-bold mb-2">No Account Needed</h3>
@@ -97,7 +97,7 @@ const HomePage = () => {
             </p>
           </div>
           <div className="text-center">
-            <div className="bg-primary-100 dark:bg-zinc-700 rounded-full w-16 h-16 mx-auto mb-4">
+            <div className="bg-primary-100 dark:bg-dark-400 rounded-full w-16 h-16 mx-auto mb-4">
               <Users className="w-full h-full p-5" />
             </div>
             <h3 className="text-lg font-bold mb-2">Track Every Expense</h3>
@@ -106,7 +106,7 @@ const HomePage = () => {
             </p>
           </div>
           <div className="text-center">
-            <div className="bg-primary-100 dark:bg-zinc-700 rounded-full w-16 h-16 mx-auto mb-4">
+            <div className="bg-primary-100 dark:bg-dark-400 rounded-full w-16 h-16 mx-auto mb-4">
               <Percent className="w-full h-full p-5" />
             </div>
             <h3 className="text-lg font-bold mb-2">Fair Settlement</h3>

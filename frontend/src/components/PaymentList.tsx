@@ -46,15 +46,15 @@ const PaymentList = ({payments}: PaymentListProps) => {
   return (
     <>
       <div className="
-        bg-neutral-50 dark:bg-zinc-800 shadow-neutral-200 dark:shadow-zinc-950
-        border-neutral-200 dark:border-zinc-700 px-6 my-6 border rounded-lg shadow-lg
-        text-neutral-800 dark:text-zinc-300 w-full mx-auto">
+        bg-neutral-50 dark:bg-dark-600 shadow-neutral-200 dark:shadow-dark-900
+        border-neutral-200 dark:border-dark-400 px-6 my-6 border rounded-lg shadow-lg
+        text-neutral-800 dark:text-gray-300 w-full mx-auto">
         <div className="flex flex-col items-center">
 
           { /* display this only if payments exist */}
           {!isBalanced ? (
             <>
-              <h3 className="w-full text-center font-bold text-lg border-b-2 py-4">How to settle depts</h3>
+              <h3 className="w-full text-center font-bold text-lg border-b-2 py-4 dark:border-dark-50">How to settle depts</h3>
               {payments.map((payment, index) => (
                 <PaymentItem key={index} payment={payment} />
               ))}
@@ -68,10 +68,10 @@ const PaymentList = ({payments}: PaymentListProps) => {
       </div>
 
       <div className="
-        bg-neutral-50 dark:bg-zinc-800 shadow-neutral-200 dark:shadow-zinc-950
-        border-neutral-200 dark:border-zinc-700 px-6 mb-6 border rounded-lg shadow-lg
-        text-neutral-800 dark:text-zinc-300 w-full mx-auto">
-        <h3 className="w-full text-center font-bold text-lg border-b-2 py-4 mb-4">
+        bg-neutral-50 dark:bg-dark-600 shadow-neutral-200 dark:shadow-dark-900
+        border-neutral-200 dark:border-dark-400 px-6 mb-6 border rounded-lg shadow-lg
+        text-neutral-800 dark:text-neutral-300 w-full mx-auto">
+        <h3 className="w-full text-center font-bold text-lg border-b-2 py-4 mb-4 dark:border-dark-50">
           Collaborate
         </h3>
         <p className="text-center w-5/6 mx-auto">
@@ -84,10 +84,11 @@ const PaymentList = ({payments}: PaymentListProps) => {
               {window.location.href}
             </span>
           </div>
-          <div className="w-8 h-8 -ml-8 mr-4 z-10 flex-shrink-0 bg-gradient-to-r from-transparent to-neutral-50 to-90%" />
+          <div className="w-8 h-8 -ml-8 mr-4 z-10 flex-shrink-0 bg-gradient-to-r
+            from-transparent to-neutral-50 dark:to-dark-600 to-90%" />
           <div>
             <ClipboardCopyIcon
-              className="w-7 h-7 bg-zinc-200 dark:bg-zinc-600 dark:text-white p-1.5 rounded-md"
+              className="w-8 h-8 bg-zinc-200 dark:bg-dark-100 dark:text-white p-2 rounded-md"
               data-tooltip-id="copy"
               data-tooltip-content="Copy link to clipboard"
               data-tooltip-place="bottom"

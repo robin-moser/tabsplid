@@ -22,7 +22,7 @@ const App = () => {
   };
 
   return (
-    <main className={` ${isDarkMode ? "dark" : ""} bg-neutral-100 dark:bg-zinc-900 dark:text-white`}>
+    <main className={` ${isDarkMode ? "dark" : ""} bg-neutral-100 dark:bg-dark-800 dark:text-neutral-200`}>
       <div className="w-full min-h-screen flex flex-col">
         < Header
           toggleDarkMode={toggleDarkMode}
@@ -47,10 +47,7 @@ const App = () => {
           reverseOrder={false}
           toastOptions={{
             duration: 4000,
-            style: {
-              background: isDarkMode ? '#333' : '#fff',
-              color: isDarkMode ? '#fff' : '#333',
-            },
+            className: isDarkMode ? 'bg-dark-50 text-white' : 'bg-white text-gray-600',
           }}
         />
       </div >

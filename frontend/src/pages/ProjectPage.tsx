@@ -78,7 +78,7 @@ const ProjectPage: React.FC<{
     // Prevent saving in demo mode
     if (isDemo) {
       toast.error("Demo mode: Changes won't be saved", {
-        className: '!bg-slate-900 !text-white !py-6 !px-8',
+        className: '!bg-slate-900 dark:!bg-slate-700 !text-white !py-6 !px-8',
         position: 'top-right',
         duration: 5000,
       });
@@ -239,11 +239,11 @@ const ProjectPage: React.FC<{
       <div className="
         w-full max-w-6xl mx-auto mt-8
         flex md:flex-row flex-col items-start
-        text-neutral-800 dark:text-zinc-300">
+        text-neutral-800 dark:text-neutral-300">
 
         {/* Left panel: Member List */}
         <div className="
-          px-4 border-neutral-200 dark:border-zinc-800
+          px-4 border-neutral-200 dark:border-dark-400
           max-w-lg w-full mx-auto md:mx-0 md:border-r-2 md:pr-6">
           <div className="py-4 text-3xl font-bold flex flex-row gap-2">
             <input
@@ -253,8 +253,8 @@ const ProjectPage: React.FC<{
               onChange={(e) => setEditedProjectName(e.target.value)}
               className="
                 w-full px-2 py-2 border rounded-md input-ring
-                border-neutral-200 dark:border-zinc-500
-                bg-white dark:bg-zinc-700"
+                border-neutral-200 dark:border-dark-100
+                bg-white dark:bg-dark-400"
             />
           </div>
           <div className="flex flex-row justify-left gap-2 items-center">
