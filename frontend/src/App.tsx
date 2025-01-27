@@ -12,13 +12,13 @@ const App = () => {
 
   const [showHeaderBorder, setShowHeaderBorder] = useState<boolean>(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    return Cookies.get("darkMode") === "true";
+    return localStorage.getItem("darkMode") === "true";
   });
 
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode;
     setIsDarkMode(newDarkMode);
-    Cookies.set("darkMode", String(newDarkMode), {expires: 365});
+    localStorage.setItem("darkMode", String(newDarkMode));
   };
 
   return (
