@@ -1,5 +1,4 @@
 import {useState} from "react";
-import Cookies from 'js-cookie';
 import {Toaster} from 'react-hot-toast';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
