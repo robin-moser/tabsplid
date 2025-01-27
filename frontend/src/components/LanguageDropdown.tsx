@@ -36,7 +36,7 @@ const LanguageDropdown = () => {
                   key={lang.code}
                   onClick={() => handleLanguageChange(lang.code)}
                   className={`flex items-center p-2 w-full rounded-lg transition-colors duration-200
-                ${currentLang === lang.code ? 'bg-primary-500 text-white' : 'hover:bg-dark-300'}`}
+                    ${currentLang === lang.code ? 'bg-primary-500 text-white' : 'hover:bg-neutral-200 hover:dark:bg-dark-300'}`}
                 >
                   <Flag className="w-6 mr-2 rounded-sm" />{lang.name}
                 </button>
