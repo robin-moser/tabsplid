@@ -8,6 +8,7 @@ export const useProjectState = (project: Project | undefined) => {
   const [editedProjectName, setEditedProjectName] = useState<string>('');
   const [originalMembers, setOriginalMembers] = useState<Member[]>([]);
   const [updatedMembers, setUpdatedMembers] = useState<Member[]>([]);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   useEffect(() => {
     if (project) {
@@ -36,6 +37,8 @@ export const useProjectState = (project: Project | undefined) => {
     setOriginalMembers,
     updatedMembers,
     setUpdatedMembers,
-    detectChanges
+    isConfirmModalOpen,
+    setIsConfirmModalOpen,
+    detectChanges,
   };
 };

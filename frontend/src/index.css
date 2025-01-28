@@ -25,3 +25,8 @@ input.member-input:focus, input.input-ring:focus {
 button {
     @apply transition-colors
 }
+
+.cst-icon-button {
+    @apply cursor-pointer transition-colors w-5 h-5
+    text-dark-500 hover:text-primary-700 dark:text-gray-300 dark:hover:text-gray-100
+}

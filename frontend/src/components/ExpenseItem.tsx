@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
 import {Expense, Member} from "../types";
-import {CircleMinus, Users} from "lucide-react";
+import {CircleX, UserPen} from "lucide-react";
 import {Tooltip} from "react-tooltip";
 import {useTranslation} from "react-i18next";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 interface ExpenseItemProps {
   memberId: string;
@@ -18,8 +19,22 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
   const [editedExpense, setEditedExpense] = useState<Expense>(expense);
   const [expenseAmount, setExpenseAmount] = useState<string>(expense.amount?.toString() || '');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const {t} = useTranslation(['project']);
+
+  const handleRemoveExpense = () => {
+    setIsConfirmModalOpen(true);
+  };
+
+  const handleConfirm = () => {
+    onDeleteExpense(memberId, expense);
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleClose = () => {
+    setIsConfirmModalOpen(false);
+  };
 
   useEffect(() => {
     setEditedExpense(expense);
@@ -39,10 +54,6 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
       setEditedExpense((prevExpense) => ({...prevExpense, amount: parsedAmount}));
     }
   }, [expenseAmount, setEditedExpense]);
-
-  const handleRemoveExpense = () => {
-    onDeleteExpense(memberId, expense);
-  };
 
   const toggleMemberSelection = (member: Member) => {
     const allMemberIds = allMembers.map((m) => m.id);
@@ -108,16 +119,21 @@ const ExpenseItem: React.FC<ExpenseItemProps> = (
       </div>
       <div className="flex mb-2 gap-2 items-center w-1/4 pl-2">
         <Tooltip id="expenseItem" />
-        <CircleMinus
-          size={20}
-          className="cursor-pointer text-zinc-400"
+        <ConfirmDeleteModal
+          isOpen={isConfirmModalOpen}
+          onClose={handleClose}
+          onConfirm={handleConfirm}
+          message={t('project:confirmDeleteExpense')}
+        />
+        <CircleX
+          className="text-zinc-400 cst-icon-button"
           onClick={handleRemoveExpense}
           data-tooltip-content={t('project:tooltip.removeExpense')}
           data-tooltip-id="expenseItem"
         />
-        <Users
-          size={20}
-          className={`cursor-pointer ${isInvolvedSubset() ? "text-primary-500" : "text-zinc-400"}`}
+        <UserPen
+          className={`cursor-pointer ${isInvolvedSubset() ? "!text-primary-500" : ""}
+            cst-icon-button`}
           onClick={() => isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true)}
           data-tooltip-content={t('project:tooltip.involvedMembers')}
           data-tooltip-id="expenseItem"

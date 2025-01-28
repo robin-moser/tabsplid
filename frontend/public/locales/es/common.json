@@ -34,6 +34,9 @@
     "success.memberDeletedSuccessfully": "Miembro \"{{name}}\" eliminado con éxito",
     "success.memberUpdatedSuccessfully": "Miembro \"{{name}}\" actualizado con éxito",
 
+    "button.cancel": "Cancelar",
+    "button.confirm": "Confirmar",
+
     "lang.english": "Inglés",
     "lang.german": "Alemán",
     "lang.spanish": "Español"

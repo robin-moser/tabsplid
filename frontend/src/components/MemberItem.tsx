@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
-import {User, Coins, CirclePlus, CircleX} from "lucide-react";
+import {User, CirclePlus, CircleX} from "lucide-react";
 import {Tooltip} from 'react-tooltip'
 
 import ExpenseItem from "./ExpenseItem";
 import {Expense, Member} from "../types";
 import {useTranslation} from "react-i18next";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 interface MemberItemProps {
   member: Member;
@@ -18,16 +19,27 @@ interface MemberItemProps {
 const MemberItem: React.FC<MemberItemProps> = (
   {member, onUpdateMember, onDeleteMember, onUpdateExpense, onDeleteExpense, allMembers}) => {
   const [editedMemberName, setEditedMemberName] = useState<string | null>(member.name);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const {t} = useTranslation(['project']);
+
+  const handleRemoveMember = () => {
+    setIsConfirmModalOpen(true);
+  };
+
+  const handleConfirm = () => {
+    onDeleteMember(member);
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleClose = () => {
+    setIsConfirmModalOpen(false);
+  };
+
 
   useEffect(() => {
     onUpdateMember({...member, name: editedMemberName});
   }, [editedMemberName]);
-
-  const handleRemoveMember = () => {
-    onDeleteMember(member);
-  }
 
   const addNewExpense = () => {
     const newExpense = {
@@ -66,17 +78,21 @@ const MemberItem: React.FC<MemberItemProps> = (
             />
           </div>
           <Tooltip id="remove" />
+          <ConfirmDeleteModal
+            isOpen={isConfirmModalOpen}
+            onClose={handleClose}
+            onConfirm={handleConfirm}
+            message={t('project:confirmDeleteMember')}
+          />
           <CircleX
-            size={20}
-            className="cursor-pointer text-zinc-400"
+            className="cursor-pointer text-zinc-400 flex-shrink-0 cst-icon-button"
             onClick={handleRemoveMember}
             data-tooltip-content={t('project:tooltip.removeThisMember')}
             data-tooltip-id="remove"
           />
         </div>
-        <div className="">
-          <span className="ml-2 text-neutral-500 dark:text-gray-400 flex gap-2 items-center">
-            <Coins size={18} />
+        <div className="bg-primary-200 dark:bg-primary-500 dark:bg-opacity-80 ml-2 px-2 rounded-md">
+          <span className="flex flex-shrink-0 text-nowrap gap-2 items-center">
             {parseFloat(member.expenses.reduce((acc, expense) => acc + (expense.amount || 0), 0).toFixed(10))}
           </span>
         </div>

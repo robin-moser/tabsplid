@@ -34,6 +34,9 @@
     "success.memberDeletedSuccessfully": "Member \"{{name}}\" deleted successfully",
     "success.memberUpdatedSuccessfully": "Member \"{{name}}\" updated successfully",
 
+    "button.cancel": "Cancel",
+    "button.confirm": "Confirm",
+
     "lang.english": "English",
     "lang.german": "German",
     "lang.spanish": "Spanish"

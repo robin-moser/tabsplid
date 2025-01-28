@@ -12,6 +12,7 @@ import MemberList from "../components/MemberList";
 import PaymentList from "../components/PaymentList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 
 import {formatDate} from "../utils";
 import {Member, Expense} from "../types";
@@ -26,6 +27,7 @@ const ProjectPage: React.FC<{
 }> = ({setShowHeaderBorder, isDemo}) => {
 
   const {t} = useTranslation(['project', 'common']);
+
   const {projectId: routeProjectId} = useParams<{projectId: string}>();
   const projectId = isDemo ? import.meta.env.VITE_DEMO_PROJECT_ID : routeProjectId;
 
@@ -58,6 +60,8 @@ const ProjectPage: React.FC<{
     setOriginalMembers,
     updatedMembers,
     setUpdatedMembers,
+    isConfirmModalOpen,
+    setIsConfirmModalOpen,
     detectChanges
   } = useProjectState(project);
 
@@ -217,10 +221,18 @@ const ProjectPage: React.FC<{
     );
   }
 
-  const handleProjectDelete = async () => {
-    if (!window.confirm(t('project:confirmDeleteProject'))) return;
+  const handleConfirm = () => {
+    setIsConfirmModalOpen(false);
     deleteProject();
     navigate('/');
+  };
+
+  const handleClose = () => {
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleProjectDelete = async () => {
+    setIsConfirmModalOpen(true);
   }
 
   if (loading.getProject) return <LoadingSpinner />;
@@ -231,7 +243,7 @@ const ProjectPage: React.FC<{
     <div className="mb-6">
       <div className={`
       w-full left-0 transition-all duration-300 ease-in-out text-sm text-center
-      p-1 min-h-8 sticky top-0 z-50 text-white md:hidden ${hasUnsavedChanges
+      p-1 min-h-8 sticky top-0 z-40 text-white md:hidden ${hasUnsavedChanges
           ? "opacity-100 bg-primary-600 cursor-pointer hover:bg-primary-700"
           : "opacity-0 bg-zinc-400"}`}
         onClick={hasUnsavedChanges ? handleSaveChanges : undefined}>
@@ -263,6 +275,12 @@ const ProjectPage: React.FC<{
               {t('project:createdDate', {date: formatDate(project.created_at)})}
             </span>
             <Tooltip id="delete" />
+            <ConfirmDeleteModal
+              isOpen={isConfirmModalOpen}
+              onClose={handleClose}
+              onConfirm={handleConfirm}
+              message={t('project:confirmDeleteProject')}
+            />
             <Trash2 className="relative -top-2 w-4 text-zinc-400 cursor-pointer"
               onClick={handleProjectDelete}
               data-tooltip-content={t('project:deleteProjectTooltip')}

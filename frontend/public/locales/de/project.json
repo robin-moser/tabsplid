@@ -1,5 +1,8 @@
 {
     "confirmDeleteProject": "Möchtest du dieses Projekt wirklich löschen?",
+    "confirmDeleteMember": "Möchtest du dieses Mitglied wirklich entfernen?",
+    "confirmDeleteExpense": "Möchtest du diese Ausgabe wirklich entfernen?",
+
     "createdDate": "Erstellt: {{date}}",
     "deleteProjectTooltip": "Dieses Projekt löschen",
     "demoModeChangesNotSaved": "Demo-Modus: Änderungen werden nicht gespeichert",
