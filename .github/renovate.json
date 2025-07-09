@@ -21,6 +21,14 @@
         "minor",
         "patch"
       ]
+    },
+    {
+      "matchManagers": ["poetry"],
+      "groupName": "poetry-non-major",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
     }
   ]
 }
