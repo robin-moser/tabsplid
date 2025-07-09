@@ -8,6 +8,10 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchManagers": ["npm"],
       "groupName": "npm-non-major",
       "matchUpdateTypes": [
         "minor",
