@@ -12,6 +12,9 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.json]
+indent_size = 2
+
 [*{.tsx,.ts,.js,.html}]
 indent_size = 2
 

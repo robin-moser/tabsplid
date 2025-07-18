@@ -3,7 +3,9 @@
   "extends": [
     "config:recommended",
     ":approveMajorUpdates",
-    ":combinePatchMinorReleases"
+    ":combinePatchMinorReleases",
+    "schedule:earlyMondays",
+    "npm:unpublishSafe"
   ],
   "packageRules": [
     {
@@ -17,18 +19,12 @@
     {
       "matchManagers": ["npm"],
       "groupName": "npm-non-major",
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ]
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "matchManagers": ["poetry"],
       "groupName": "poetry-non-major",
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ]
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }
