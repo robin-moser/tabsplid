@@ -1,0 +1,38 @@
+services:
+  frontend:
+    image: robinmoser/tabsplid/frontend:latest
+    ports:
+      - "3000:80"
+    environment:
+      # Public accessable address of the backend, change accordingly to your reverse proxy
+      VITE_API_URL: "http://localhost:8000/api"
+      # UUID of the demo project, which gets linked on the homepage
+      VITE_DEMO_PROJECT_ID: "00000000-0000-0000-0000-000000000000"
+    depends_on:
+      - backend
+
+  backend:
+    image: robinmoser/tabsplid/frontend:latest
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "mysql+pymysql://tabsplid:tabsplid-pass@db:3306/tabsplid"
+      # UUID of the demo project, completly disable write operations on the project
+      DEMO_PROJECT_ID: "00000000-0000-0000-0000-000000000000"
+      # Optional: Set Basic Auth to enable the secured endpoint GET /projects
+      # BASIC_AUTH: "admin:$2y$10$examplehash"
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:11.5
+    volumes:
+      - tabsplid_db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root-pass
+      MYSQL_DATABASE: tabsplid-pass
+      MYSQL_USER: tabsplid
+      MYSQL_PASSWORD: tabsplid
+
+volumes:
+  tabsplid_db:
