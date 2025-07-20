@@ -1,6 +1,7 @@
 name: Build
 env:
   IMAGENAME: tabsplid
+  STACKNAME: tabsplid-dev
 
 on:
   push:
@@ -11,6 +12,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
     strategy:
       matrix:
         component: [backend, frontend]
@@ -53,3 +56,18 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  publish:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy stack
+        uses: robin-moser/portainer-stack-deploy@v2
+        with:
+          portainer-host: ${{ secrets.PORTAINER_HOST }}
+          token: ${{ secrets.PORTAINER_TOKEN }}
+          swarm-id: ${{ secrets.PORTAINER_SWARM_ID }}
+          stack-name: ${{ env.STACKNAME }}
+          tag-replacements: |
+            ${{ secrets.REGISTRY_URL }}/${{ env.IMAGENAME }}/backend:${{ needs.release.outputs.version }}
+            ${{ secrets.REGISTRY_URL }}/${{ env.IMAGENAME }}/frontend:${{ needs.release.outputs.version }}
