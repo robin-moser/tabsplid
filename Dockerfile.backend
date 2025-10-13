@@ -1,4 +1,4 @@
-FROM python:3.13 AS build
+FROM python:3.14 AS build
 
 RUN pip install poetry==1.8.5
 
@@ -15,7 +15,7 @@ RUN touch README.md && \
     poetry install --no-root && rm -rf $POETRY_CACHE_DIR
 
 
-FROM python:3.13-slim
+FROM python:3.14-slim
 
 WORKDIR /application
 
